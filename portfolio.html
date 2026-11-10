@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lim Bunheng — IT Student, Setec Institute</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --blue-deep: #0b2545;
+        --blue-mid: #134074;
+        --blue-line: #8da9c4;
+        --paper: #eef4ed;
+        --amber: #efb036;
+        --amber-dim: #a97f26;
+        --grid-line: rgba(141, 169, 196, 0.16);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--blue-deep);
+        color: var(--paper);
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* blueprint grid backdrop */
+      .grid-bg {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background-image:
+          linear-gradient(var(--grid-line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+      }
+
+      a {
+        color: var(--amber);
+        text-decoration: none;
+      }
+
+      .wrap {
+        position: relative;
+        z-index: 1;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .mono {
+        font-family: "Space Mono", monospace;
+      }
+
+      /* ===== NAV ===== */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(11, 37, 69, 0.85);
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid var(--grid-line);
+      }
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 24px;
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      .nav-id {
+        font-family: "Space Mono", monospace;
+        font-size: 13px;
+        color: var(--blue-line);
+        letter-spacing: 0.05em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 28px;
+      }
+      .nav-links a {
+        color: var(--paper);
+        font-size: 14px;
+        font-family: "Space Mono", monospace;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -6px;
+        width: 0;
+        height: 1px;
+        background: var(--amber);
+        transition: width 0.25s ease;
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* ===== HERO / BOOT SEQUENCE ===== */
+      .hero {
+        min-height: 88vh;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 34px;
+        justify-items: start;
+        padding-top: 60px;
+        padding-bottom: 60px;
+      }
+      .hero-inner {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 20px;
+        align-items: center;
+        max-width: 760px;
+        width: 100%;
+        margin: 0;
+      }
+      .hero-avatar {
+        width: 220px;
+        min-width: 220px;
+        aspect-ratio: 1 / 1;
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.08),
+          rgba(255, 255, 255, 0.02)
+        );
+      }
+      .hero-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      @media (max-width: 720px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+          justify-items: center;
+        }
+        .hero-avatar {
+          margin: 0 auto;
+        }
+        .hero-sub,
+        .hero-tags {
+          margin-left: 0;
+          max-width: 720px;
+          width: 100%;
+        }
+      }
+      .terminal {
+        width: 100%;
+        border: 1px solid var(--blue-line);
+        border-radius: 4px;
+        background: linear-gradient(
+          180deg,
+          rgba(19, 64, 116, 0.25),
+          rgba(19, 64, 116, 0.05)
+        );
+        box-shadow:
+          0 0 0 1px rgba(141, 169, 196, 0.08),
+          0 30px 60px -30px rgba(0, 0, 0, 0.6);
+        overflow: hidden;
+      }
+      .terminal-bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--grid-line);
+        font-family: "Space Mono", monospace;
+        font-size: 12px;
+        color: var(--blue-line);
+      }
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--blue-line);
+        opacity: 0.5;
+      }
+      .terminal-body {
+        padding: 22px 24px 26px;
+        font-family: "Space Mono", monospace;
+        font-size: 14px;
+        line-height: 1.7;
+        min-height: 210px;
+      }
+      .boot-line {
+        color: var(--blue-line);
+        opacity: 0;
+      }
+      .boot-line .ok {
+        color: #7fd08a;
+      }
+      .boot-line .val {
+        color: var(--paper);
+      }
+      .caret {
+        display: inline-block;
+        width: 8px;
+        background: var(--amber);
+        animation: blink 1s steps(1) infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .hero-title {
+        margin: 0;
+        font-family: "Space Mono", monospace;
+        font-weight: 700;
+        font-size: clamp(28px, 5vw, 48px);
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+      }
+      .hero-title .role-line {
+        display: block;
+        margin-top: 12px;
+        font-size: 0.6em;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .hero-title .amber {
+        color: var(--amber);
+      }
+      .hero-sub {
+        margin-top: 14px;
+        color: var(--blue-line);
+        font-size: 17px;
+        max-width: 760px;
+      }
+      .hero-tags {
+        margin-top: 22px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        max-width: 760px;
+      }
+      .tag {
+        font-family: "Space Mono", monospace;
+        font-size: 12px;
+        border: 1px solid var(--blue-line);
+        color: var(--blue-line);
+        padding: 5px 10px;
+        border-radius: 100px;
+      }
+
+      /* ===== SECTION HEADERS ===== */
+      .sect {
+        padding: 70px 0;
+        border-top: 1px solid var(--grid-line);
+      }
+      .sect-label {
+        font-family: "Space Mono", monospace;
+        font-size: 12px;
+        color: var(--amber);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .sect-label::before {
+        content: "";
+        width: 22px;
+        height: 1px;
+        background: var(--amber);
+      }
+      .sect h2 {
+        font-family: "Space Mono", monospace;
+        font-size: clamp(22px, 3.5vw, 32px);
+        margin: 0 0 30px;
+        font-weight: 700;
+      }
+
+      /* ===== ABOUT ===== */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: 40px;
+      }
+      @media (max-width: 720px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .schematic-box {
+        border: 1px solid var(--blue-line);
+        padding: 20px;
+        font-family: "Space Mono", monospace;
+        font-size: 12px;
+        color: var(--blue-line);
+        position: relative;
+      }
+      .schematic-box::before {
+        content: "FIG. 01 — OPERATOR";
+        position: absolute;
+        top: -10px;
+        left: 12px;
+        background: var(--blue-deep);
+        padding: 0 6px;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+      }
+      .schematic-box dl {
+        margin: 0;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 6px 14px;
+      }
+      .schematic-box dt {
+        color: var(--blue-line);
+        opacity: 0.7;
+      }
+      .schematic-box dd {
+        margin: 0;
+        color: var(--paper);
+      }
+      .about-text p {
+        line-height: 1.8;
+        color: #d7e3f0;
+        font-size: 15.5px;
+      }
+
+      /* ===== SKILLS ===== */
+      .skills {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px 40px;
+      }
+      @media (max-width: 720px) {
+        .skills {
+          grid-template-columns: 1fr;
+        }
+      }
+      .skill-row {
+        font-family: "Space Mono", monospace;
+        font-size: 13px;
+      }
+      .skill-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 6px;
+        color: var(--blue-line);
+      }
+      .skill-top span:last-child {
+        color: var(--amber);
+      }
+      .meter {
+        height: 6px;
+        background: rgba(141, 169, 196, 0.15);
+        border-radius: 3px;
+        overflow: hidden;
+      }
+      .meter i {
+        display: block;
+        height: 100%;
+        background: linear-gradient(90deg, var(--amber-dim), var(--amber));
+        width: 0;
+        transition: width 1.4s ease;
+        border-radius: 3px;
+      }
+
+      /* ===== PROJECTS ===== */
+      .modules {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      @media (max-width: 720px) {
+        .modules {
+          grid-template-columns: 1fr;
+        }
+      }
+      .module {
+        border: 1px solid var(--grid-line);
+        padding: 22px;
+        position: relative;
+        transition:
+          border-color 0.25s ease,
+          transform 0.25s ease;
+      }
+      .module:hover {
+        border-color: var(--amber);
+        transform: translateY(-3px);
+      }
+      .module .mod-id {
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        color: var(--amber);
+        letter-spacing: 0.1em;
+      }
+      .module h3 {
+        margin: 8px 0 8px;
+        font-size: 18px;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+      }
+      .module p {
+        margin: 0 0 14px;
+        font-size: 14px;
+        color: #c6d4e3;
+        line-height: 1.6;
+      }
+      .module .stack {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .module .stack span {
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        color: var(--blue-line);
+        border: 1px solid var(--blue-line);
+        padding: 2px 7px;
+        border-radius: 100px;
+      }
+
+      /* ===== EDUCATION ===== */
+      .timeline {
+        border-left: 1px solid var(--blue-line);
+        padding-left: 26px;
+      }
+      .t-item {
+        position: relative;
+        margin-bottom: 26px;
+      }
+      .t-item::before {
+        content: "";
+        position: absolute;
+        left: -31px;
+        top: 4px;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--amber);
+        box-shadow: 0 0 0 4px rgba(239, 176, 54, 0.15);
+      }
+      .t-item .t-when {
+        font-family: "Space Mono", monospace;
+        font-size: 12px;
+        color: var(--amber);
+      }
+      .t-item h4 {
+        margin: 4px 0 4px;
+        font-size: 16px;
+      }
+      .t-item p {
+        margin: 0;
+        color: #c6d4e3;
+        font-size: 14px;
+      }
+
+      /* ===== CONTACT ===== */
+      .contact-term {
+        border: 1px solid var(--blue-line);
+        padding: 26px;
+        font-family: "Space Mono", monospace;
+        font-size: 14px;
+      }
+      .contact-term .line {
+        margin-bottom: 10px;
+        color: var(--blue-line);
+      }
+      .contact-term .prompt {
+        color: var(--amber);
+      }
+      .contact-term a {
+        color: var(--paper);
+        border-bottom: 1px dotted var(--blue-line);
+      }
+      .contact-term a:hover {
+        color: var(--amber);
+        border-color: var(--amber);
+      }
+
+      footer {
+        text-align: center;
+        padding: 30px 0;
+        font-family: "Space Mono", monospace;
+        font-size: 12px;
+        color: var(--blue-line);
+        border-top: 1px solid var(--grid-line);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .caret {
+          animation: none;
+        }
+        .meter i {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-bg"></div>
+
+    <header>
+      <nav>
+        <div class="nav-id mono">LIM_BUNHENG // v1.0</div>
+        <div class="nav-links">
+          <a href="#about">about</a>
+          <a href="#skills">skills</a>
+          <a href="#projects">projects</a>
+          <a href="#education">education</a>
+          <a href="#certifications">certs</a>
+          <a href="#contact">contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span class="dot"></span><span class="dot"></span
+            ><span class="dot"></span>
+            <span style="margin-left: 6px">boot.log</span>
+          </div>
+          <div class="terminal-body" id="bootBody">
+            <div class="boot-line">
+              &gt; initializing profile<span class="val">...</span>
+              <span class="ok">[OK]</span>
+            </div>
+            <div class="boot-line">
+              &gt; loading student record:
+              <span class="val">Setec Institute, BSc IT (MIS)</span>
+              <span class="ok">[OK]</span>
+            </div>
+            <div class="boot-line">
+              &gt; mounting stack:
+              <span class="val">Java · Laravel · Node.js · React</span>
+              <span class="ok">[OK]</span>
+            </div>
+            <div class="boot-line">
+              &gt; status:
+              <span class="val">seeking Full Stack / Backend role</span>
+              <span class="ok">[READY]</span>
+            </div>
+            <div class="boot-line">&gt; <span class="caret">&nbsp;</span></div>
+          </div>
+        </div>
+
+        <div class="hero-inner">
+          <div class="hero-avatar">
+            <img src="profile.jpg" alt="Profile photo of Lim Bunheng" />
+          </div>
+          <div class="hero-text">
+            <h1 class="hero-title">
+              LIM BUNHENG
+              <span class="amber role-line">// Full Stack Developer</span>
+            </h1>
+          </div>
+        </div>
+
+        <p class="hero-sub">
+          Information Technology student at Setec Institute, Phnom Penh,
+          building web applications with Java, Spring Boot, PHP/Laravel,
+          Node.js, Angular, React, SQL, and REST APIs.
+        </p>
+        <div class="hero-tags">
+          <a
+            class="tag"
+            href="https://github.com/Bunheng123"
+            target="_blank"
+            rel="noopener"
+            style="color: #efb036"
+            >Github</a
+          >
+          <span class="tag">Phnom Penh, Cambodia</span>
+          <span class="tag">Setec Institute</span>
+          <span class="tag">Full Stack · Backend · REST APIs</span>
+        </div>
+      </section>
+
+      <section class="sect" id="about">
+        <div class="sect-label">01 · About</div>
+        <h2>Who's operating this terminal</h2>
+        <div class="about-grid">
+          <div class="schematic-box">
+            <dl>
+              <dt>NAME</dt>
+              <dd>Lim Bunheng</dd>
+              <dt>ROLE</dt>
+              <dd>Full Stack / Backend Dev</dd>
+              <dt>SCHOOL</dt>
+              <dd>Setec Institute</dd>
+              <dt>DEGREE</dt>
+              <dd>BSc IT — MIS</dd>
+              <dt>BASE</dt>
+              <dd>Phnom Penh, KH</dd>
+              <dt>STATUS</dt>
+              <dd>Seeking opportunities</dd>
+            </dl>
+          </div>
+          <div class="about-text">
+            <p>
+              I'm an Information Technology student aiming for a Full Stack or
+              Backend Developer role. I build web applications with Java, Spring
+              Boot, PHP/Laravel, Node.js, Angular, React, SQL, and REST APIs.
+            </p>
+            <p>
+              I care about writing clean, maintainable code and want to keep
+              growing through real-world software development experience —
+              turning coursework and short courses into projects that actually
+              run end to end, from the database up through the interface.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sect" id="skills">
+        <div class="sect-label">02 · Skills</div>
+        <h2>Signal strength by area</h2>
+        <div class="skills">
+          <div class="skill-row">
+            <div class="skill-top">
+              <span>HTML / CSS / JavaScript</span><span>85%</span>
+            </div>
+            <div class="meter"><i style="width: 85%"></i></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top">
+              <span>PHP / Laravel</span><span>70%</span>
+            </div>
+            <div class="meter"><i style="width: 70%"></i></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top"><span>Java</span><span>70%</span></div>
+            <div class="meter"><i style="width: 70%"></i></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top">
+              <span>React / Angular</span><span>75%</span>
+            </div>
+            <div class="meter"><i style="width: 75%"></i></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top">
+              <span>Node.js / Express</span><span>55%</span>
+            </div>
+            <div class="meter"><i style="width: 55%"></i></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top">
+              <span>SQL / MongoDB</span><span>75%</span>
+            </div>
+            <div class="meter"><i style="width: 75%"></i></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top">
+              <span>Python / C / C++</span><span>60%</span>
+            </div>
+            <div class="meter"><i style="width: 60%"></i></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top">
+              <span>Git / GitHub / Postman</span><span>75%</span>
+            </div>
+            <div class="meter"><i style="width: 78%"></i></div>
+          </div>
+        </div>
+        <p
+          style="
+            margin-top: 26px;
+            font-family: &quot;Space Mono&quot;, monospace;
+            font-size: 13px;
+            color: var(--blue-line);
+          "
+        >
+          Frameworks: Bootstrap · Tailwind CSS · React · Laravel · Flask
+          &nbsp;|&nbsp; Tools: Figma · VS Code
+        </p>
+      </section>
+
+      <section class="sect" id="projects">
+        <div class="sect-label">03 · Projects</div>
+        <h2>Modules built so far</h2>
+        <div class="modules">
+          <div class="module">
+            <div class="mod-id">MOD.01 — Year 2, 2024–2025</div>
+            <h3>Product Management System</h3>
+            <p>
+              A web-based dashboard to manage products efficiently, with modules
+              for product insertion, updates, and real-time display to
+              streamline operations.
+            </p>
+            <div class="stack">
+              <span>Node.js</span><span>Express</span><span>MongoDB</span
+              ><span>Tailwind CSS</span>
+            </div>
+          </div>
+          <div class="module">
+            <div class="mod-id">MOD.02 — Year 2, 2024–2025</div>
+            <h3>Online Store Dashboard</h3>
+            <p>
+              A frontend dashboard integrated with external APIs to manage and
+              display company products, with responsive components for listing
+              and real-time updates.
+            </p>
+            <div class="stack"><span>Angular</span><span>REST APIs</span></div>
+          </div>
+          <div class="module">
+            <div class="mod-id">MOD.03 — Short Course</div>
+            <h3>Full E-Commerce Platform</h3>
+            <p>
+              A full-stack e-commerce app with secure authentication and
+              role-based authorization, plus product, category, cart, checkout,
+              and order management modules.
+            </p>
+            <div class="stack">
+              <span>Laravel</span><span>React</span><span>Sanctum</span
+              ><span>MySQL</span><span>Cloudinary</span>
+            </div>
+          </div>
+          <div class="module">
+            <div class="mod-id">MOD.04</div>
+            <h3>Portfolio Site (this page)</h3>
+            <p>
+              A single-file static site used to test hosting and deployment, and
+              how a page behaves once it's live outside localhost.
+            </p>
+            <div class="stack">
+              <span>HTML</span><span>CSS</span><span>JS</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sect" id="education">
+        <div class="sect-label">04 · Education</div>
+        <h2>Timeline</h2>
+        <div class="timeline">
+          <div class="t-item">
+            <div class="t-when">2023 — Present</div>
+            <h4>Setec Institute, Phnom Penh</h4>
+            <p>
+              Bachelor of Science in Information Technology, Management
+              Information System (MIS) track.
+            </p>
+          </div>
+          <div class="t-item">
+            <div class="t-when">2017 — 2023</div>
+            <h4>Chumpu Vorn High School</h4>
+            <p>Completed high school (Back II Certificate).</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sect" id="certifications">
+        <div class="sect-label">05 · Certifications</div>
+        <h2>Completed courses</h2>
+        <div class="timeline">
+          <div class="t-item">
+            <div class="t-when">2023</div>
+            <h4>High School Completion Certificate (Grade 12)</h4>
+            <p>Chumpu Vorn High School</p>
+          </div>
+          <div class="t-item">
+            <div class="t-when">Year 1 completed</div>
+            <h4>Associate Degree in Management Information System</h4>
+            <p>Setec Institute</p>
+          </div>
+          <div class="t-item">
+            <div class="t-when">Short course</div>
+            <h4>Basic Computer & Networking Installation</h4>
+          </div>
+          <div class="t-item">
+            <div class="t-when">Short course</div>
+            <h4>Basic Programming in C, C++, and OOP</h4>
+          </div>
+          <div class="t-item">
+            <div class="t-when">Short course</div>
+            <h4>Web Frontend Development</h4>
+          </div>
+          <div class="t-item">
+            <div class="t-when">Short course</div>
+            <h4>Basic / Advanced PHP, OOP, MySQL, Laravel</h4>
+          </div>
+          <div class="t-item">
+            <div class="t-when">Completed</div>
+            <h4>English Language Program</h4>
+            <p>All levels completed</p>
+          </div>
+        </div>
+
+        <div class="about-grid" style="margin-top: 40px">
+          <div
+            class="schematic-box"
+            style="--label: &quot;FIG. 02 — LANGUAGES&quot;"
+          >
+            <dl>
+              <dt>KHMER</dt>
+              <dd>Mother tongue</dd>
+              <dt>ENGLISH</dt>
+              <dd>Intermediate</dd>
+            </dl>
+          </div>
+          <div class="about-text">
+            <h4
+              style="
+                margin-top: 0;
+                font-family: &quot;Space Mono&quot;, monospace;
+                color: var(--blue-line);
+                font-size: 13px;
+                letter-spacing: 0.05em;
+              "
+            >
+              REFERENCES
+            </h4>
+            <p>
+              <strong>Mr. Choeun Pinchai</strong> — Lecturer at Setec
+              Institute<br />Tel: <a href="tel:0997749670">099 774 967</a>
+            </p>
+            <p>
+              <strong>Mr. Ly Lay</strong> — Lecturer at Setec Institute<br />Tel:
+              <a href="tel:0935559700">093 555 970</a> · Email:
+              <a href="mailto:lay.isme@gmail.com">lay.isme@gmail.com</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sect" id="contact">
+        <div class="sect-label">06 · Contact</div>
+        <h2>Open a connection</h2>
+        <div class="contact-term">
+          <div class="line"><span class="prompt">$</span> whoami</div>
+          <div class="line">
+            lim_bunheng — IT student, Setec Institute (BSc IT, MIS)
+          </div>
+          <div class="line"><span class="prompt">$</span> cat contact.txt</div>
+          <div class="line">
+            email:
+            <a href="mailto:hengheng513.513@gmail.com"
+              >hengheng513.513@gmail.com</a
+            >
+          </div>
+          <div class="line">phone: <a href="tel:017255700">017 255 700</a></div>
+          <div class="line">
+            address: #54 St. 108B, Prey Pring, Khang Tboung 2, Sangkat Chom Chao
+            3
+          </div>
+          <div class="line">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Khan Pou Senchey,
+            Phnom Penh, Cambodia
+          </div>
+          <div class="line">
+            <span class="prompt">$</span> <span class="caret">&nbsp;</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 Lim Bunheng · Built for hosting test purposes · Setec Institute
+    </footer>
+
+    <script>
+      // Boot sequence reveal
+      document.querySelectorAll(".boot-line").forEach((el, i) => {
+        setTimeout(() => {
+          el.style.transition = "opacity .35s ease";
+          el.style.opacity = 1;
+        }, i * 380);
+      });
+
+      // Animate skill meters when in view
+      const meters = document.querySelectorAll(".meter i");
+      const setWidths = new Map();
+      meters.forEach((m) => {
+        setWidths.set(m, m.style.width);
+        m.style.width = "0";
+      });
+
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const bar = entry.target.querySelector("i");
+              if (bar) bar.style.width = setWidths.get(bar);
+              obs.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.4 },
+      );
+
+      document.querySelectorAll(".meter").forEach((m) => obs.observe(m));
+    </script>
+  </body>
+</html>
