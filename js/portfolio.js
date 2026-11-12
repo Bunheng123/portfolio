@@ -86,7 +86,8 @@ function initNavScrollSpy() {
   });
 
   navMenu?.addEventListener("mouseleave", () => {
-    const activeLink = document.querySelector(".nav-link.active") || navLinks[0];
+    const activeLink =
+      document.querySelector(".nav-link.active") || navLinks[0];
     if (activeLink) {
       moveIndicator(activeLink, true);
     }
@@ -103,7 +104,10 @@ function initNavScrollSpy() {
     }
 
     // 2. When reached bottom of the page, activate "Contact"
-    if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 60) {
+    if (
+      window.innerHeight + scrollY >=
+      document.documentElement.scrollHeight - 60
+    ) {
       setActive("#contact", true);
       return;
     }
@@ -134,18 +138,20 @@ function initNavScrollSpy() {
         ticking = true;
       }
     },
-    { passive: true }
+    { passive: true },
   );
 
   window.addEventListener("resize", () => {
-    const activeLink = document.querySelector(".nav-link.active") || navLinks[0];
+    const activeLink =
+      document.querySelector(".nav-link.active") || navLinks[0];
     if (activeLink) {
       moveIndicator(activeLink, false);
     }
   });
 
   // Initial positioning
-  const initialActive = document.querySelector(".nav-link.active") || navLinks[0];
+  const initialActive =
+    document.querySelector(".nav-link.active") || navLinks[0];
   if (initialActive) {
     moveIndicator(initialActive, false);
   }
@@ -153,7 +159,8 @@ function initNavScrollSpy() {
   // Slight delay for font layout settling
   setTimeout(() => {
     handleScroll();
-    const activeLink = document.querySelector(".nav-link.active") || navLinks[0];
+    const activeLink =
+      document.querySelector(".nav-link.active") || navLinks[0];
     if (activeLink) moveIndicator(activeLink, false);
   }, 100);
 }
@@ -206,7 +213,10 @@ function initLanyardInteraction() {
     const deltaX = event.clientX - centerX;
     const deltaY = event.clientY - centerY;
 
-    targetRotX = Math.max(-16, Math.min(16, (-deltaY / (rect.height / 2)) * 14));
+    targetRotX = Math.max(
+      -16,
+      Math.min(16, (-deltaY / (rect.height / 2)) * 14),
+    );
     targetRotY = Math.max(-18, Math.min(18, (deltaX / (rect.width / 2)) * 16));
     targetStrapRot = Math.max(-8, Math.min(8, (deltaX / (rect.width / 2)) * 6));
 
@@ -222,8 +232,10 @@ function initLanyardInteraction() {
       rafId = null;
     }
 
-    cardWrapper.style.transition = "transform 0.6s cubic-bezier(0.2, 1, 0.4, 1)";
-    if (strap) strap.style.transition = "transform 0.6s cubic-bezier(0.2, 1, 0.4, 1)";
+    cardWrapper.style.transition =
+      "transform 0.6s cubic-bezier(0.2, 1, 0.4, 1)";
+    if (strap)
+      strap.style.transition = "transform 0.6s cubic-bezier(0.2, 1, 0.4, 1)";
 
     cardWrapper.style.transform = "rotateX(0deg) rotateY(0deg) translateY(0)";
     if (strap) strap.style.transform = "rotate(0deg)";
@@ -496,15 +508,8 @@ function runWebGLTopo(gl, canvas, motionQuery) {
   gl.bindBuffer(gl.ARRAY_BUFFER, quadBuffer);
   gl.bufferData(
     gl.ARRAY_BUFFER,
-    new Float32Array([
-      -1, -1,
-       1, -1,
-      -1,  1,
-      -1,  1,
-       1, -1,
-       1,  1,
-    ]),
-    gl.STATIC_DRAW
+    new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+    gl.STATIC_DRAW,
   );
 
   const posLoc = gl.getAttribLocation(program, "a_position");
@@ -558,7 +563,7 @@ function runWebGLTopo(gl, canvas, motionQuery) {
     gl.uniform2f(
       mouseLoc,
       mouseX * Math.min(window.devicePixelRatio || 1, 1.5),
-      mouseY * Math.min(window.devicePixelRatio || 1, 1.5)
+      mouseY * Math.min(window.devicePixelRatio || 1, 1.5),
     );
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);

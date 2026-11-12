@@ -1,0 +1,1657 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Lim Bunheng — Junior Full-Stack Developer & IT student at SETEC Institute, Phnom Penh, Cambodia. Open for full-time and internship opportunities."
+    />
+    <title>Lim Bunheng | Junior Full-Stack Developer</title>
+
+    <!-- Google Fonts: Bricolage Grotesque (700, 800) & Inter (400, 500, 600) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Devicon & FontAwesome pinned CDN (monochrome styled) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Tailwind Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                bg: "#060608",
+                card: "#0E0E12",
+                green: "#22C55E",
+              },
+            },
+            fontFamily: {
+              sans: [
+                "Inter",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "sans-serif",
+              ],
+              display: ['"Bricolage Grotesque"', "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Vanilla JavaScript -->
+    <script src="js/main.js" defer></script>
+  </head>
+  <body class="bg-[#060608] text-[#F8FAFC] antialiased">
+    <!-- 1. FULL-SCREEN ANIMATED TOPOGRAPHIC CONTOUR CANVAS OVER #060608 -->
+    <div class="topo-background" aria-hidden="true">
+      <canvas id="topo-canvas"></canvas>
+      <div class="topo-vignette"></div>
+    </div>
+
+    <!-- 2. SITE HEADER (FIXED, H-16) -->
+    <header
+      class="fixed inset-x-0 top-0 z-50 h-16 border-b border-white/10 bg-[#060608]/80 backdrop-blur-xl"
+    >
+      <div id="scrollLine" class="scroll-line" aria-hidden="true"></div>
+      <nav
+        aria-label="Main navigation"
+        class="relative mx-auto flex h-full w-full items-center justify-between gap-4 px-[5%]"
+      >
+        <!-- Left: Solid white rounded-xl "LB" square + Name (display 800) + "Full-stack developer" (sentence case) -->
+        <a
+          href="#home"
+          class="flex items-center gap-3 text-white transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+        >
+          <span
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white font-display text-sm font-extrabold text-black"
+          >
+            LB
+          </span>
+          <span class="flex flex-col leading-tight">
+            <span
+              class="font-display text-lg font-extrabold tracking-normal text-white"
+              >Lim Bunheng</span
+            >
+            <span class="text-xs font-normal text-neutral-400"
+              >Full-stack developer</span
+            >
+          </span>
+        </a>
+
+        <!-- Center: Links Home, About me, Skills, Projects, Contact (Inter 500, 14px, neutral-400, white on hover/active) with 2px sliding underline -->
+        <div id="navMenu" class="relative hidden items-center gap-7 lg:flex">
+          <a class="nav-link active" href="#home">Home</a>
+          <a class="nav-link" href="#about">About me</a>
+          <a class="nav-link" href="#skills">Skills</a>
+          <a class="nav-link" href="#projects">Projects</a>
+          <a class="nav-link" href="#contact">Contact</a>
+          <span
+            class="nav-indicator"
+            id="navIndicator"
+            aria-hidden="true"
+          ></span>
+        </div>
+
+        <!-- Right: Exploring indicator + Solid white pill "Let’s talk" linking to #contact -->
+        <div class="hidden items-center gap-4 lg:flex">
+          <div
+            class="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 backdrop-blur-md"
+          >
+            <div
+              id="ringWrap"
+              class="relative flex h-5 w-5 items-center justify-center"
+            >
+              <svg
+                class="h-5 w-5 -rotate-90 transform"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="10"
+                  cy="10"
+                  r="8"
+                  fill="none"
+                  stroke="rgba(255, 255, 255, 0.15)"
+                  stroke-width="2"
+                />
+                <circle
+                  id="progressRingBar"
+                  cx="10"
+                  cy="10"
+                  r="8"
+                  fill="none"
+                  stroke="#FFFFFF"
+                  stroke-width="2"
+                  stroke-dasharray="50.27"
+                  stroke-dashoffset="50.27"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <svg
+                id="progressCheck"
+                class="hidden absolute h-2.5 w-2.5 text-black"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <span id="scrollLabel" class="text-xs font-medium text-neutral-400"
+              >Exploring</span
+            >
+            <span
+              id="scrollPercent"
+              class="w-[4ch] font-mono text-xs font-semibold text-white"
+              >0%</span
+            >
+            <span class="hidden text-xs text-neutral-400 xl:inline"
+              >of the page</span
+            >
+          </div>
+          <a href="#contact" class="btn-primary">Let’s talk</a>
+        </div>
+
+        <!-- Below lg: Hamburger button -->
+        <button
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+          class="mobile-toggle inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.04] p-2 text-neutral-300 transition-colors hover:border-white/30 hover:text-white focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 lg:hidden"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            aria-hidden="true"
+          >
+            <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" />
+          </svg>
+        </button>
+      </nav>
+
+      <!-- Below lg: Full-width dropdown with links, closes on link click and on Escape -->
+      <div
+        id="mobileMenu"
+        class="hidden absolute top-16 inset-x-0 border-b border-white/10 bg-[#060608]/95 px-[5%] py-5 backdrop-blur-2xl lg:hidden"
+      >
+        <div class="flex flex-col gap-3">
+          <a
+            class="nav-link py-1.5 text-base font-medium text-neutral-400 hover:text-white"
+            href="#home"
+            >Home</a
+          >
+          <a
+            class="nav-link py-1.5 text-base font-medium text-neutral-400 hover:text-white"
+            href="#about"
+            >About me</a
+          >
+          <a
+            class="nav-link py-1.5 text-base font-medium text-neutral-400 hover:text-white"
+            href="#skills"
+            >Skills</a
+          >
+          <a
+            class="nav-link py-1.5 text-base font-medium text-neutral-400 hover:text-white"
+            href="#projects"
+            >Projects</a
+          >
+          <a
+            class="nav-link py-1.5 text-base font-medium text-neutral-400 hover:text-white"
+            href="#contact"
+            >Contact</a
+          >
+          <div class="pt-3 border-t border-white/10">
+            <a href="#contact" class="btn-primary w-full">Let’s talk</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 3. MAIN CONTENT LANDMARK -->
+    <main id="main-content" class="relative z-10">
+      <!-- ===== HERO SECTION (ID="HOME") ===== -->
+      <section
+        id="home"
+        aria-labelledby="hero-heading"
+        class="relative flex w-full flex-col justify-between pt-24 pb-8 sm:pt-28 lg:min-h-screen lg:pt-28 lg:pb-8"
+      >
+        <div class="mx-auto w-full px-[5%]">
+          <div class="hero-grid">
+            <!-- LEFT COLUMN -->
+            <div class="hero-col min-w-0 flex flex-col items-start text-left">
+              <!-- Pill "Based in Phnom Penh" with small green dot -->
+              <div
+                class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-neutral-300"
+              >
+                <span class="h-2 w-2 rounded-full bg-[#22C55E]"></span>
+                <span>Based in Phnom Penh</span>
+              </div>
+
+              <!-- Name "LIM BUNHENG" in display 800, clamp(3rem, 7vw, 6.5rem) -->
+              <h1 id="hero-heading" class="hero-name" aria-label="Lim Bunheng">
+                <span class="word" aria-hidden="true"
+                  ><span class="letter-wrap"
+                    ><span class="letter" style="--i: 0">L</span></span
+                  ><span class="letter-wrap"
+                    ><span class="letter" style="--i: 1">I</span></span
+                  ><span class="letter-wrap"
+                    ><span class="letter" style="--i: 2">M</span></span
+                  ></span
+                ><span class="hero-name-space" aria-hidden="true">&nbsp;</span
+                ><span class="word" aria-hidden="true"
+                  ><span class="letter-wrap"
+                    ><span class="letter" style="--i: 3">B</span></span
+                  ><span class="letter-wrap"
+                    ><span class="letter" style="--i: 4">U</span></span
+                  ><span class="letter-wrap"
+                    ><span class="letter" style="--i: 5">N</span></span
+                  ><span class="letter-wrap"
+                    ><span class="letter" style="--i: 6">H</span></span
+                  ><span class="letter-wrap"
+                    ><span class="letter" style="--i: 7">E</span></span
+                  ><span class="letter-wrap"
+                    ><span class="letter" style="--i: 8">N</span></span
+                  ><span class="letter-wrap"
+                    ><span class="letter" style="--i: 9">G</span></span
+                  ></span
+                >
+              </h1>
+
+              <!-- Typewriter line (display 700, sentence case, fixed min-height so nothing jumps, blinking cursor) -->
+              <p class="hero-tagline" aria-live="polite">
+                <span id="typewriterText"
+                  >I build full-stack web applications.</span
+                ><span
+                  id="typewriterCursor"
+                  aria-hidden="true"
+                  class="tw-cursor"
+                  >|</span
+                >
+              </p>
+
+              <!-- Two buttons: "View my projects" (primary with SVG arrow) & "Contact me" (secondary) -->
+              <div class="mt-6 flex flex-wrap items-center gap-3">
+                <a href="#projects" class="btn-primary">
+                  <span>View my projects</span>
+                  <svg
+                    class="h-4 w-4"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+                <a href="#contact" class="btn-secondary">
+                  <span>Contact me</span>
+                </a>
+              </div>
+
+              <!-- Icon-only social buttons (email, Telegram, GitHub) as bordered circles with aria-labels -->
+              <div class="mt-4 flex flex-wrap items-center gap-2.5">
+                <a
+                  href="mailto:limbunheng.kh@gmail.com"
+                  class="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.04] text-neutral-300 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                  aria-label="Email Lim Bunheng at limbunheng.kh@gmail.com"
+                >
+                  <i
+                    class="fa-solid fa-envelope text-sm"
+                    aria-hidden="true"
+                  ></i>
+                </a>
+                <a
+                  href="[YOUR_TELEGRAM_URL]"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.04] text-neutral-300 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                  aria-label="Contact Lim Bunheng on Telegram"
+                >
+                  <i
+                    class="fa-brands fa-telegram text-base"
+                    aria-hidden="true"
+                  ></i>
+                </a>
+                <a
+                  href="https://github.com/Bunheng123"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.04] text-neutral-300 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                  aria-label="GitHub profile of Lim Bunheng"
+                >
+                  <i
+                    class="fa-brands fa-github text-base"
+                    aria-hidden="true"
+                  ></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- CENTER COLUMN: Developer ID card hanging from a short lanyard -->
+            <div class="hero-col min-w-0 flex justify-center">
+              <div class="lanyard-scene" id="lanyardScene">
+                <!-- Hanging Ribbon Strap & Metallic Clip -->
+                <div
+                  class="lanyard-strap-container relative flex flex-col items-center"
+                >
+                  <!-- Ceiling bracket -->
+                  <div
+                    class="h-2 w-8 rounded-full border border-neutral-700 bg-neutral-800 shadow-[0_0_10px_rgba(255,255,255,0.08)]"
+                  ></div>
+                  <!-- Short woven ribbon -->
+                  <div
+                    class="relative flex h-9 sm:h-10 w-5 items-center justify-center overflow-hidden rounded-sm border-x border-neutral-700 bg-gradient-to-b from-[#18181B] via-[#27272A] to-[#18181B] shadow-md"
+                  >
+                    <div
+                      class="absolute inset-y-0 left-[2px] w-[1px] bg-white/20"
+                    ></div>
+                    <div
+                      class="absolute inset-y-0 right-[2px] w-[1px] bg-white/20"
+                    ></div>
+                    <span
+                      class="rotate-90 select-none font-mono text-[7px] font-bold uppercase tracking-[0.2em] text-white/60"
+                      >SETEC MIS</span
+                    >
+                  </div>
+                  <!-- Metallic Ring & Swivel Hook -->
+                  <div class="relative z-10 -mt-1 flex flex-col items-center">
+                    <div
+                      class="h-3 w-3 rounded-full border-2 border-neutral-300 bg-transparent shadow-sm"
+                    ></div>
+                    <div
+                      class="-mt-1 h-3.5 w-2.5 rounded-sm border border-neutral-400 bg-gradient-to-b from-neutral-200 via-neutral-400 to-neutral-600 shadow-md"
+                    ></div>
+                  </div>
+                </div>
+
+                <!-- 3D Tilting Card Wrapper (6s idle sway animation) -->
+                <div
+                  class="lanyard-card-wrapper lanyard-swaying -mt-1"
+                  id="lanyardCardWrapper"
+                >
+                  <div
+                    class="lanyard-card w-[17.5rem] sm:w-[19rem] rounded-3xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl shadow-[0_24px_60px_rgba(0,0,0,0.85)]"
+                  >
+                    <!-- Slot Punch Hole -->
+                    <div
+                      class="mx-auto mb-3 h-1.5 w-10 rounded-full border border-neutral-800 bg-[#060608] shadow-[inset_0_2px_4px_rgba(0,0,0,0.9)]"
+                    ></div>
+
+                    <!-- Top Row: "SETEC Institute" + "MIS · Year 4" -->
+                    <div
+                      class="mb-3 flex items-center justify-between border-b border-white/10 px-1 pb-2.5"
+                    >
+                      <div class="flex items-center gap-1.5">
+                        <span class="h-2 w-2 rounded-sm bg-white"></span>
+                        <span class="font-sans text-xs font-semibold text-white"
+                          >SETEC Institute</span
+                        >
+                      </div>
+                      <span class="text-xs font-medium text-neutral-400"
+                        >MIS · Year 4</span
+                      >
+                    </div>
+
+                    <!-- Photo in rounded-2xl frame with pill over bottom-left -->
+                    <div
+                      class="relative overflow-hidden rounded-2xl border border-neutral-800 bg-[#060608]"
+                    >
+                      <img
+                        src="assets/profile.png"
+                        alt="Portrait of Lim Bunheng, Junior Full-Stack Developer"
+                        loading="eager"
+                        class="h-[17rem] sm:h-[18.5rem] w-full object-cover object-top"
+                      />
+                      <div
+                        class="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-60"
+                      ></div>
+
+                      <!-- Pill "Aspiring full-stack developer" over bottom-left -->
+                      <div
+                        class="absolute bottom-2.5 left-2.5 flex items-center gap-1.5 rounded-full border border-white/20 bg-[#060608]/90 px-3 py-1 backdrop-blur-md"
+                      >
+                        <span class="text-[11px] font-medium text-white"
+                          >Aspiring full-stack developer</span
+                        >
+                      </div>
+                    </div>  
+
+                    <!-- Footer with "Developer ID" label, name in display 800, and a "Verified" pill -->
+                    <div class="mt-3.5 px-1">
+                      <div class="flex items-center justify-between">
+                        <div>
+                          <p
+                            class="text-[10px] uppercase font-mono text-neutral-400 tracking-wider"
+                          >
+                            Developer ID
+                          </p>
+                          <h3
+                            class="font-display text-xl font-extrabold text-white leading-tight mt-0.5"
+                          >
+                            LIM BUNHENG
+                          </h3>
+                        </div>
+                        <span
+                          class="rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-xs font-medium text-neutral-300"
+                        >
+                          Verified
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div
+              class="hero-col min-w-0 flex flex-col items-start text-left lg:items-end lg:text-right w-full"
+            >
+              <!-- Pill "Role focus" (matching eyebrow pill height) -->
+              <div
+                class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1.5 text-xs font-medium text-neutral-300"
+              >
+                <span class="h-2 w-2 rounded-full bg-white/40"></span>
+                <span>Role focus</span>
+              </div>
+
+              <!-- "FULL-STACK DEVELOPMENT" in display 800 (same size, style & position as name) -->
+              <h2
+                class="hero-role-heading uppercase text-white text-left lg:text-right"
+              >
+                FULL-STACK<br />DEVELOPMENT
+              </h2>
+
+              <!-- Developer status: single-line pill -->
+              <div
+                class="status-pill mt-6 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 backdrop-blur-xl"
+              >
+                <span class="relative flex h-2 w-2">
+                  <span
+                    class="absolute inline-flex h-full w-full rounded-full bg-[#22C55E] opacity-75 motion-reduce:hidden animate-ping"
+                  ></span>
+                  <span
+                    class="relative inline-flex h-2 w-2 rounded-full bg-[#22C55E]"
+                  ></span>
+                </span>
+                <span class="text-xs sm:text-sm font-semibold text-white"
+                  >Open to work</span
+                >
+                <span class="h-3 w-px bg-white/20" aria-hidden="true"></span>
+                <span
+                  class="rounded-full bg-white px-2.5 py-0.5 text-xs font-semibold text-black"
+                >
+                  Full-time
+                </span>
+                <span
+                  class="rounded-full border border-white/20 bg-white/[0.03] px-2.5 py-0.5 text-xs font-medium text-neutral-300"
+                >
+                  Intern
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTTOM OF HERO: Two skill marquees (rows move in opposite directions, pill chips with tech icon + name from MY FACTS, pause on hover, mask-image fade on both edges) -->
+        <div
+          class="tech-ticker mt-10 w-full"
+          aria-label="Technologies and skills ticker"
+        >
+          <!-- Row 1: Frontend & Tools -->
+          <div
+            class="tech-track"
+            title="Click to pause or resume"
+            tabindex="0"
+            role="region"
+            aria-label="Frontend and tools ticker"
+          >
+            <span class="tech-chip"
+              ><i class="devicon-html5-plain colored"></i> HTML5</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-css3-plain colored"></i> CSS3</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-tailwindcss-original colored"></i> Tailwind
+              CSS</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-javascript-plain colored"></i> JavaScript</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-typescript-plain colored"></i> TypeScript</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-react-original colored"></i> React.js</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-git-plain colored"></i> Git</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-github-original" style="color: #ffffff"></i>
+              GitHub</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-vscode-plain colored"></i> VS Code</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-postman-plain colored"></i> Postman</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-figma-plain colored"></i> Figma</span
+            >
+            <!-- Duplicate for seamless infinite loop -->
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-html5-plain colored"></i> HTML5</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-css3-plain colored"></i> CSS3</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-tailwindcss-original colored"></i> Tailwind
+              CSS</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-javascript-plain colored"></i> JavaScript</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-typescript-plain colored"></i> TypeScript</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-react-original colored"></i> React.js</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-git-plain colored"></i> Git</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-github-original" style="color: #ffffff"></i>
+              GitHub</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-vscode-plain colored"></i> VS Code</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-postman-plain colored"></i> Postman</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-figma-plain colored"></i> Figma</span
+            >
+          </div>
+
+          <!-- Row 2: Backend, Databases, Cloud & Architecture (moves in reverse) -->
+          <div
+            class="tech-track reverse"
+            title="Click to pause or resume"
+            tabindex="0"
+            role="region"
+            aria-label="Backend, database, cloud and architecture ticker"
+          >
+            <span class="tech-chip chip-highlight"
+              ><i class="devicon-java-plain colored icon-bright-java"></i> Java</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-spring-original colored"></i> Spring Boot</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-php-plain colored"></i> PHP</span
+            >
+            <span class="tech-chip chip-highlight"
+              ><i class="devicon-laravel-original colored icon-bright-laravel"></i> Laravel</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-python-plain colored"></i> Python</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-flask-original" style="color: #ffffff"></i>
+              Flask</span
+            >
+            <span class="tech-chip chip-highlight"
+              ><i class="devicon-postgresql-plain colored icon-bright-postgres"></i> PostgreSQL</span
+            >
+            <span class="tech-chip chip-highlight"
+              ><i class="devicon-mysql-plain colored icon-bright-mysql"></i> MySQL</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-sqlite-plain colored"></i> SQLite</span
+            >
+            <span class="tech-chip"
+              ><i class="devicon-docker-plain colored"></i> Docker</span
+            >
+            <span class="tech-chip chip-highlight">
+              <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="#009639" d="M12 0L1.6 6v12L12 24l10.4-6V6L12 0z"/>
+                <path fill="#FFFFFF" d="M7.5 7.5h2.2l4.6 6.8V7.5h2.2v9h-2.2L9.7 9.7v6.8H7.5V7.5z"/>
+              </svg>
+              Nginx
+            </span>
+            <span class="tech-chip"
+              ><i
+                class="devicon-amazonwebservices-plain-wordmark"
+                style="color: #ff9900"
+              ></i>
+              AWS EC2</span
+            >
+            <!-- Duplicate for seamless infinite loop -->
+            <span class="tech-chip chip-highlight" aria-hidden="true"
+              ><i class="devicon-java-plain colored icon-bright-java"></i> Java</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-spring-original colored"></i> Spring Boot</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-php-plain colored"></i> PHP</span
+            >
+            <span class="tech-chip chip-highlight" aria-hidden="true"
+              ><i class="devicon-laravel-original colored icon-bright-laravel"></i> Laravel</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-python-plain colored"></i> Python</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-flask-original" style="color: #ffffff"></i>
+              Flask</span
+            >
+            <span class="tech-chip chip-highlight" aria-hidden="true"
+              ><i class="devicon-postgresql-plain colored icon-bright-postgres"></i> PostgreSQL</span
+            >
+            <span class="tech-chip chip-highlight" aria-hidden="true"
+              ><i class="devicon-mysql-plain colored icon-bright-mysql"></i> MySQL</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-sqlite-plain colored"></i> SQLite</span
+            >
+            <span class="tech-chip" aria-hidden="true"
+              ><i class="devicon-docker-plain colored"></i> Docker</span
+            >
+            <span class="tech-chip chip-highlight" aria-hidden="true">
+              <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="#009639" d="M12 0L1.6 6v12L12 24l10.4-6V6L12 0z"/>
+                <path fill="#FFFFFF" d="M7.5 7.5h2.2l4.6 6.8V7.5h2.2v9h-2.2L9.7 9.7v6.8H7.5V7.5z"/>
+              </svg>
+              Nginx
+            </span>
+            <span class="tech-chip" aria-hidden="true"
+              ><i
+                class="devicon-amazonwebservices-plain-wordmark"
+                style="color: #ff9900"
+              ></i>
+              AWS EC2</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ABOUT ME SECTION ===== -->
+      <section
+        id="about"
+        aria-labelledby="about-heading"
+        class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8"
+      >
+        <div class="reveal mb-10">
+          <p class="text-xs font-medium text-neutral-400">About me</p>
+          <h2
+            id="about-heading"
+            class="display-heading mt-1 text-3xl sm:text-4xl lg:text-5xl text-white"
+          >
+            ABOUT ME
+          </h2>
+        </div>
+
+        <!-- Row 1: Profile Card + Bio Card -->
+        <div class="grid items-stretch gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+          <!-- Profile Card (Lazy Loaded) -->
+          <article class="reveal card-large flex flex-col overflow-hidden">
+            <div
+              class="relative min-h-[20rem] flex-1 overflow-hidden sm:min-h-[22rem]"
+            >
+              <img
+                src="assets/profile.png"
+                alt="Lim Bunheng, Junior Full-Stack Developer"
+                loading="lazy"
+                class="absolute inset-0 h-full w-full object-cover"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-[#060608] via-transparent to-transparent"
+              ></div>
+            </div>
+            <div
+              class="flex items-center justify-between gap-4 border-t border-white/10 p-5 bg-[#060608]/80"
+            >
+              <div>
+                <h3 class="text-lg font-semibold text-white">Lim Bunheng</h3>
+                <p class="text-xs text-neutral-400">
+                  Junior Full-Stack Developer
+                </p>
+              </div>
+              <span
+                class="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-neutral-300"
+              >
+                <svg
+                  class="h-3.5 w-3.5 text-neutral-400"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"
+                  />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+                Phnom Penh, Cambodia
+              </span>
+            </div>
+          </article>
+
+          <!-- Bio Card -->
+          <article class="reveal card-large flex flex-col p-6 sm:p-8">
+            <span
+              class="mb-3 inline-flex w-fit items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-300"
+            >
+              Who I am
+            </span>
+
+            <h3 class="font-display text-2xl font-bold text-white sm:text-3xl">
+              Junior Full-Stack Developer
+            </h3>
+
+            <div
+              class="mt-4 space-y-3.5 text-sm sm:text-base leading-relaxed text-neutral-300"
+            >
+              <p>
+                Motivated Information Technology student at SETEC Institute with
+                practical experience in web development, backend API
+                development, database management, and UI design.
+              </p>
+              <p>
+                Familiar with
+                <span class="font-medium text-white">Java Spring Boot</span>,
+                <span class="font-medium text-white">PHP Laravel</span>,
+                <span class="font-medium text-white">Python Flask</span>,
+                <span class="font-medium text-white">React.js</span>, and
+                relational databases. Experienced in developing academic and
+                personal projects involving
+                <span class="font-medium text-white">RESTful APIs</span>,
+                <span class="font-medium text-white">JWT authentication</span>,
+                <span class="font-medium text-white">CRUD operations</span>, and
+                <span class="font-medium text-white">database integration</span
+                >.
+              </p>
+              <p>
+                Interested in building reliable, secure, and user-friendly web
+                applications while continuously improving full-stack development
+                skills.
+              </p>
+            </div>
+
+            <!-- Strengths Pills -->
+            <div class="mt-auto pt-6">
+              <p class="mb-2.5 text-xs font-medium text-neutral-400">
+                Strengths
+              </p>
+              <ul class="flex flex-wrap gap-2 list-none p-0 m-0">
+                <li
+                  class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-neutral-200"
+                >
+                  Adaptability
+                </li>
+                <li
+                  class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-neutral-200"
+                >
+                  Problem solving
+                </li>
+                <li
+                  class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-neutral-200"
+                >
+                  Fast learner
+                </li>
+                <li
+                  class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-neutral-200"
+                >
+                  Teamwork
+                </li>
+                <li
+                  class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs text-neutral-200"
+                >
+                  Attention to detail
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <!-- Row 2: Stats Container (Exact Facts: GPA 3.87, 10+ websites, 20+ posters, 5+ videos) -->
+        <dl
+          class="reveal card-large mt-6 grid grid-cols-2 overflow-hidden lg:grid-cols-4 divide-y divide-white/10 sm:divide-y-0 sm:divide-x divide-white/10"
+        >
+          <div class="p-6 text-center">
+            <dd
+              class="font-display text-3xl sm:text-4xl font-extrabold text-white"
+            >
+              3.87<span class="text-base font-normal text-neutral-500">
+                / 4.00</span
+              >
+            </dd>
+            <dt class="mt-1 text-xs font-medium text-neutral-400">GPA</dt>
+          </div>
+          <div class="p-6 text-center">
+            <dd
+              class="font-display text-3xl sm:text-4xl font-extrabold text-white"
+            >
+              10+
+            </dd>
+            <dt class="mt-1 text-xs font-medium text-neutral-400">
+              Websites built
+            </dt>
+          </div>
+          <div class="p-6 text-center">
+            <dd
+              class="font-display text-3xl sm:text-4xl font-extrabold text-white"
+            >
+              20+
+            </dd>
+            <dt class="mt-1 text-xs font-medium text-neutral-400">
+              Posters designed
+            </dt>
+          </div>
+          <div class="p-6 text-center">
+            <dd
+              class="font-display text-3xl sm:text-4xl font-extrabold text-white"
+            >
+              5+
+            </dd>
+            <dt class="mt-1 text-xs font-medium text-neutral-400">
+              Promotional videos
+            </dt>
+          </div>
+        </dl>
+      </section>
+
+      <!-- ===== SKILLS / EXPERTISE SECTION ===== -->
+      <section
+        id="skills"
+        aria-labelledby="skills-heading"
+        class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8"
+      >
+        <div class="reveal mb-10">
+          <p class="text-xs font-medium text-neutral-400">My expertise</p>
+          <h2
+            id="skills-heading"
+            class="display-heading mt-1 text-3xl sm:text-4xl lg:text-5xl text-white"
+          >
+            MY EXPERTISE
+          </h2>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Full-Stack -->
+          <article class="reveal card-small p-6">
+            <h3 class="font-display text-lg font-bold text-white mb-4">
+              Full-Stack Development
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-chip"
+                ><i class="devicon-html5-plain"></i> HTML5</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-css3-plain"></i> CSS3</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-tailwindcss-original"></i> Tailwind CSS</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-javascript-plain"></i> JavaScript</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-typescript-plain"></i> TypeScript</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-react-original"></i> React.js</span
+              >
+              <span class="tech-chip">Responsive web design</span>
+            </div>
+          </article>
+
+          <!-- Backend -->
+          <article class="reveal card-small p-6">
+            <h3 class="font-display text-lg font-bold text-white mb-4">
+              Backend Development
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-chip"
+                ><i class="devicon-java-plain"></i> Java</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-spring-original"></i> Spring Boot</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-php-plain"></i> PHP</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-laravel-original"></i> Laravel</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-python-plain"></i> Python</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-flask-original"></i> Flask</span
+              >
+              <span class="tech-chip">RESTful APIs</span>
+              <span class="tech-chip">CRUD operations</span>
+            </div>
+          </article>
+
+          <!-- Authentication & Security -->
+          <article class="reveal card-small p-6">
+            <h3 class="font-display text-lg font-bold text-white mb-4">
+              Authentication &amp; Security
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-chip">JWT authentication</span>
+              <span class="tech-chip">Role-based access control</span>
+              <span class="tech-chip">Secure token storage</span>
+              <span class="tech-chip">API authentication</span>
+            </div>
+          </article>
+
+          <!-- Databases -->
+          <article class="reveal card-small p-6">
+            <h3 class="font-display text-lg font-bold text-white mb-4">
+              Database Integration
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-chip"
+                ><i class="devicon-postgresql-plain"></i> PostgreSQL</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-mysql-plain"></i> MySQL</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-sqlite-plain"></i> SQLite</span
+              >
+              <span class="tech-chip">SQL JOINs</span>
+              <span class="tech-chip">GROUP BY &amp; Aggregates</span>
+              <span class="tech-chip">Subqueries</span>
+              <span class="tech-chip">Database relationships</span>
+            </div>
+          </article>
+
+          <!-- Cloud & DevOps Tools -->
+          <article class="reveal card-small p-6">
+            <h3 class="font-display text-lg font-bold text-white mb-4">
+              Cloud &amp; Developer Tools
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-chip"
+                ><i class="devicon-git-plain"></i> Git</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-github-original"></i> GitHub</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-vscode-plain"></i> VS Code</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-postman-plain"></i> Postman</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-docker-plain"></i> Docker</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-nginx-original"></i> Nginx</span
+              >
+              <span class="tech-chip"
+                ><i class="devicon-amazonwebservices-plain-wordmark"></i> AWS
+                EC2</span
+              >
+            </div>
+          </article>
+
+          <!-- Creative & Design -->
+          <article class="reveal card-small p-6">
+            <h3 class="font-display text-lg font-bold text-white mb-4">
+              Design &amp; Multimedia
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="tech-chip"
+                ><i class="devicon-figma-plain"></i> Figma (UI/UX)</span
+              >
+              <span class="tech-chip">Poster design (20+)</span>
+              <span class="tech-chip">Promotional video editing (5+)</span>
+              <span class="tech-chip">Visual consistency</span>
+              <span class="tech-chip">Accessibility design</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== FEATURED PROJECTS SECTION ===== -->
+      <section
+        id="projects"
+        aria-labelledby="projects-heading"
+        class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8"
+      >
+        <div class="reveal mb-10">
+          <p class="text-xs font-medium text-neutral-400">Selected work</p>
+          <h2
+            id="projects-heading"
+            class="display-heading mt-1 text-3xl sm:text-4xl lg:text-5xl text-white"
+          >
+            FEATURED PROJECTS
+          </h2>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <!-- Project 1: Stock Inventory Management System -->
+          <article
+            class="reveal card-large flex flex-col justify-between p-6 sm:p-8"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span
+                  class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-300"
+                >
+                  Java Spring Boot
+                </span>
+                <span class="text-xs text-neutral-400">Backend System</span>
+              </div>
+
+              <h3 class="font-display text-xl sm:text-2xl font-bold text-white">
+                Stock Inventory Management System
+              </h3>
+
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="tech-chip text-xs">Java</span>
+                <span class="tech-chip text-xs">Spring Boot</span>
+                <span class="tech-chip text-xs">PostgreSQL</span>
+                <span class="tech-chip text-xs">JWT</span>
+              </div>
+
+              <p class="mt-4 text-sm leading-relaxed text-neutral-300">
+                Developed a robust backend system for inventory and stock
+                management with RESTful APIs and secure role-based access
+                control.
+              </p>
+
+              <ul
+                class="mt-3 space-y-1.5 text-xs text-neutral-400 list-disc list-inside"
+              >
+                <li>Implemented stock and administrative RESTful APIs.</li>
+                <li>
+                  Used JWT authentication and role-based access control (RBAC).
+                </li>
+                <li>
+                  Structured code using clean architecture: controllers,
+                  services, entities, and DTOs.
+                </li>
+              </ul>
+            </div>
+
+            <div
+              class="mt-6 pt-4 border-t border-white/10 flex items-center gap-3"
+            >
+              <a
+                href="[YOUR_INVENTORY_PROJECT_GITHUB_URL]"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-secondary h-12"
+              >
+                <span>View repository</span>
+                <i class="fa-brands fa-github" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- Project 2: E-Commerce Web Application (Laravel + React) -->
+          <article
+            class="reveal card-large flex flex-col justify-between p-6 sm:p-8"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span
+                  class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-300"
+                >
+                  PHP Laravel
+                </span>
+                <span class="text-xs text-neutral-400"
+                  >Full-Stack Application</span
+                >
+              </div>
+
+              <h3 class="font-display text-xl sm:text-2xl font-bold text-white">
+                E-Commerce Web Application
+              </h3>
+
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="tech-chip text-xs">PHP</span>
+                <span class="tech-chip text-xs">Laravel</span>
+                <span class="tech-chip text-xs">React.js</span>
+                <span class="tech-chip text-xs">SQL</span>
+              </div>
+
+              <p class="mt-4 text-sm leading-relaxed text-neutral-300">
+                Built a commerce platform with separated frontend and backend
+                functionality for catalog, product, and category management.
+              </p>
+
+              <ul
+                class="mt-3 space-y-1.5 text-xs text-neutral-400 list-disc list-inside"
+              >
+                <li>Created database-driven product and category logic.</li>
+                <li>
+                  Explored authentication and API integration between frontend
+                  and backend.
+                </li>
+                <li>
+                  Applied relational modeling, migrations, and CRUD operations.
+                </li>
+              </ul>
+            </div>
+
+            <div
+              class="mt-6 pt-4 border-t border-white/10 flex items-center gap-3"
+            >
+              <a
+                href="[YOUR_ECOMMERCE_LARAVEL_GITHUB_URL]"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-secondary h-12"
+              >
+                <span>View repository</span>
+                <i class="fa-brands fa-github" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- Project 3: Responsive Shopping Experience (Flask + SQLite) -->
+          <article
+            class="reveal card-large flex flex-col justify-between p-6 sm:p-8"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span
+                  class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-300"
+                >
+                  Python Flask
+                </span>
+                <span class="text-xs text-neutral-400">Web Application</span>
+              </div>
+
+              <h3 class="font-display text-xl sm:text-2xl font-bold text-white">
+                Responsive Shopping Experience
+              </h3>
+
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="tech-chip text-xs">Python</span>
+                <span class="tech-chip text-xs">Flask</span>
+                <span class="tech-chip text-xs">SQLite</span>
+                <span class="tech-chip text-xs">Tailwind CSS</span>
+              </div>
+
+              <p class="mt-4 text-sm leading-relaxed text-neutral-300">
+                Designed a product showcase with cart logic, checkout flow, and
+                automated Telegram notifications for order updates.
+              </p>
+
+              <ul
+                class="mt-3 space-y-1.5 text-xs text-neutral-400 list-disc list-inside"
+              >
+                <li>
+                  Built responsive product listing and detail views with
+                  Tailwind CSS.
+                </li>
+                <li>
+                  Integrated cookie-based shopping cart behavior and checkout
+                  handling.
+                </li>
+                <li>
+                  Created order notification flow integrated with Telegram Bot
+                  API.
+                </li>
+              </ul>
+            </div>
+
+            <div
+              class="mt-6 pt-4 border-t border-white/10 flex items-center gap-3"
+            >
+              <a
+                href="[YOUR_ECOMMERCE_FLASK_GITHUB_URL]"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-secondary h-12"
+              >
+                <span>View repository</span>
+                <i class="fa-brands fa-github" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- Project 4: Web Hosting & Deployment (AWS & Nginx) -->
+          <article
+            class="reveal card-large flex flex-col justify-between p-6 sm:p-8"
+          >
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <span
+                  class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-300"
+                >
+                  Cloud &amp; DevOps
+                </span>
+                <span class="text-xs text-neutral-400"
+                  >Deployment Architecture</span
+                >
+              </div>
+
+              <h3 class="font-display text-xl sm:text-2xl font-bold text-white">
+                Web Hosting &amp; Deployment
+              </h3>
+
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="tech-chip text-xs">AWS EC2</span>
+                <span class="tech-chip text-xs">Nginx</span>
+                <span class="tech-chip text-xs">Route 53</span>
+                <span class="tech-chip text-xs">Docker</span>
+              </div>
+
+              <p class="mt-4 text-sm leading-relaxed text-neutral-300">
+                Practiced production deployment workflows for multiple websites
+                with server configuration, DNS setup, and HTTPS enablement.
+              </p>
+
+              <ul
+                class="mt-3 space-y-1.5 text-xs text-neutral-400 list-disc list-inside"
+              >
+                <li>
+                  Configured Nginx server blocks for multiple domains and
+                  reverse proxying.
+                </li>
+                <li>
+                  Managed DNS records via AWS Route 53 and automated SSL
+                  certificates.
+                </li>
+                <li>
+                  Explored Docker containerization and reverse proxy deployment
+                  patterns.
+                </li>
+              </ul>
+            </div>
+
+            <div
+              class="mt-6 pt-4 border-t border-white/10 flex items-center gap-3"
+            >
+              <a
+                href="[YOUR_DEPLOYMENT_GUIDE_OR_DEMO_URL]"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-secondary h-12"
+              >
+                <span>View documentation</span>
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                  />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== EDUCATION & EXPERIENCE SECTION ===== -->
+      <section
+        id="experience"
+        aria-labelledby="experience-heading"
+        class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8"
+      >
+        <div class="reveal mb-10">
+          <p class="text-xs font-medium text-neutral-400">
+            Academic &amp; creative experience
+          </p>
+          <h2
+            id="experience-heading"
+            class="display-heading mt-1 text-3xl sm:text-4xl lg:text-5xl text-white"
+          >
+            EDUCATION &amp; EXPERIENCE
+          </h2>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+          <!-- Column 1: Education & Achievements -->
+          <article class="reveal card-large p-6 sm:p-8">
+            <span
+              class="mb-3 inline-flex w-fit items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-300"
+            >
+              Academic Background
+            </span>
+
+            <div class="space-y-6">
+              <div class="border-l-2 border-white/20 pl-4">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-display text-lg font-bold text-white">
+                    SETEC Institute
+                  </h3>
+                  <span class="text-xs text-neutral-400">2023 – Present</span>
+                </div>
+                <p class="text-sm text-neutral-300 mt-1">
+                  Bachelor of Science in Information Technology – Management
+                  Information Systems (MIS)
+                </p>
+                <p class="text-xs font-semibold text-white mt-1">
+                  GPA: 3.87 / 4.00
+                </p>
+              </div>
+
+              <div class="border-l-2 border-white/20 pl-4">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-display text-lg font-bold text-white">
+                    Chumpu Vorn High School
+                  </h3>
+                  <span class="text-xs text-neutral-400">2011 – 2023</span>
+                </div>
+                <p class="text-sm text-neutral-300 mt-1">High School Diploma</p>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-white/10">
+              <h4 class="text-sm font-semibold text-white mb-3">
+                Key Achievements
+              </h4>
+              <ul
+                class="space-y-2 text-xs text-neutral-300 list-disc list-inside"
+              >
+                <li>
+                  Maintained an exceptional cumulative GPA of 3.87 / 4.00 at
+                  SETEC Institute.
+                </li>
+                <li>
+                  Built 10+ websites, including SPAs and MPAs with modern
+                  toolchains.
+                </li>
+                <li>
+                  Designed 20+ promotional posters and produced 5+ project
+                  campaign videos.
+                </li>
+                <li>
+                  Recognized for strong UI execution and rapid technical
+                  adaptability.
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Column 2: Creative & Design Experience -->
+          <article class="reveal card-large p-6 sm:p-8">
+            <span
+              class="mb-3 inline-flex w-fit items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-300"
+            >
+              Creative &amp; Design Experience
+            </span>
+
+            <div class="space-y-6">
+              <div class="border-l-2 border-white/20 pl-4">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-display text-lg font-bold text-white">
+                    Web Design
+                  </h3>
+                  <span class="text-xs text-neutral-400">2023 – Present</span>
+                </div>
+                <p class="text-xs text-neutral-300 mt-1">
+                  Designed and developed responsive websites with HTML, CSS,
+                  JavaScript, and Tailwind CSS. Created organized Figma
+                  wireframes and UI components prior to production.
+                </p>
+              </div>
+
+              <div class="border-l-2 border-white/20 pl-4">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-display text-lg font-bold text-white">
+                    Graphic Design
+                  </h3>
+                  <span class="text-xs text-neutral-400">2023 – Present</span>
+                </div>
+                <p class="text-xs text-neutral-300 mt-1">
+                  Created more than 20 posters and visual materials for school
+                  projects and university events utilizing Adobe Photoshop and
+                  Adobe Illustrator.
+                </p>
+              </div>
+
+              <div class="border-l-2 border-white/20 pl-4">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-display text-lg font-bold text-white">
+                    Video Editing
+                  </h3>
+                  <span class="text-xs text-neutral-400">2024 – Present</span>
+                </div>
+                <p class="text-xs text-neutral-300 mt-1">
+                  Produced and edited more than 5 promotional videos for student
+                  activities and social media campaigns with Adobe Premiere Pro
+                  and After Effects.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-white/10">
+              <h4 class="text-sm font-semibold text-white mb-2.5">Languages</h4>
+              <div class="flex items-center gap-3">
+                <span class="tech-chip text-xs">Khmer – Native</span>
+                <span class="tech-chip text-xs">English – Intermediate</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== CONTACT SECTION ===== -->
+      <section
+        id="contact"
+        aria-labelledby="contact-heading"
+        class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8"
+      >
+        <div class="reveal card-large p-6 sm:p-10 lg:p-12">
+          <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12">
+            <!-- Left Contact Callout -->
+            <div class="flex flex-col justify-between">
+              <div>
+                <p class="text-xs font-medium text-neutral-400">
+                  Let’s connect
+                </p>
+                <h2
+                  id="contact-heading"
+                  class="display-heading mt-2 text-3xl sm:text-4xl lg:text-5xl text-white"
+                >
+                  LET’S BUILD SOMETHING MEANINGFUL.
+                </h2>
+                <p
+                  class="mt-4 text-sm sm:text-base leading-relaxed text-neutral-300"
+                >
+                  Currently open for full-time junior full-stack developer roles
+                  and internship opportunities. Feel free to reach out via email
+                  or phone to discuss projects and collaborations.
+                </p>
+              </div>
+
+              <!-- Contact Action Buttons (48px primary & secondary pills with inline SVG) -->
+              <div class="mt-8 flex flex-wrap items-center gap-3">
+                <a href="mailto:limbunheng.kh@gmail.com" class="btn-primary">
+                  <span>Email me</span>
+                  <svg
+                    class="h-4 w-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                    />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                </a>
+                <a href="tel:017255700" class="btn-secondary">
+                  <span>Call me</span>
+                  <svg
+                    class="h-4 w-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Right Contact Details List -->
+            <div class="flex flex-col justify-center space-y-3">
+              <div
+                class="card-small flex items-center justify-between p-4 transition-colors hover:border-white/20"
+              >
+                <span class="text-xs text-neutral-400">Email</span>
+                <a
+                  href="mailto:limbunheng.kh@gmail.com"
+                  class="text-sm font-medium text-white hover:underline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                >
+                  limbunheng.kh@gmail.com
+                </a>
+              </div>
+
+              <div
+                class="card-small flex items-center justify-between p-4 transition-colors hover:border-white/20"
+              >
+                <span class="text-xs text-neutral-400">Phone</span>
+                <a
+                  href="tel:017255700"
+                  class="text-sm font-medium text-white hover:underline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                >
+                  017 255 700
+                </a>
+              </div>
+
+              <div class="card-small flex items-center justify-between p-4">
+                <span class="text-xs text-neutral-400">Location</span>
+                <span class="text-sm font-medium text-white"
+                  >Phnom Penh, Cambodia</span
+                >
+              </div>
+
+              <div
+                class="card-small flex items-center justify-between p-4 transition-colors hover:border-white/20"
+              >
+                <span class="text-xs text-neutral-400">GitHub</span>
+                <a
+                  href="https://github.com/Bunheng123"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm font-medium text-white hover:underline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                >
+                  github.com/Bunheng123
+                </a>
+              </div>
+
+              <div
+                class="card-small flex items-center justify-between p-4 transition-colors hover:border-white/20"
+              >
+                <span class="text-xs text-neutral-400">LinkedIn</span>
+                <a
+                  href="[YOUR_LINKEDIN_URL]"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm font-medium text-white hover:underline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                >
+                  [YOUR_LINKEDIN_URL]
+                </a>
+              </div>
+
+              <div
+                class="card-small flex items-center justify-between p-4 transition-colors hover:border-white/20"
+              >
+                <span class="text-xs text-neutral-400">Telegram</span>
+                <a
+                  href="[YOUR_TELEGRAM_URL]"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm font-medium text-white hover:underline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                >
+                  [YOUR_TELEGRAM_URL]
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 4. SEMANTIC FOOTER -->
+    <footer
+      class="relative z-10 border-t border-white/10 py-8 text-center text-xs text-neutral-400"
+    >
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <p
+          class="font-display font-medium uppercase tracking-wider text-neutral-400"
+        >
+          Lim Bunheng &bull; Junior Full-Stack Developer &bull; Phnom Penh,
+          Cambodia
+        </p>
+        <p class="mt-2 text-neutral-500">
+          Built with plain HTML5, CSS3, vanilla JavaScript &amp; Tailwind CSS
+          CDN.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
