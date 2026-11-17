@@ -513,6 +513,7 @@ input:focus-visible {
 }
 
 .lanyard-swaying {
+  transform-origin: top center;
   animation: lanyardIdleSway 6s ease-in-out infinite;
 }
 
@@ -635,6 +636,61 @@ input:focus-visible {
   100% {
     transform: translateX(0);
   }
+}
+
+/* ==========================================================================
+   03 — TECHNOLOGY & TOOLS INTERACTIVE TILES
+   ========================================================================== */
+.tool-tile {
+  position: relative;
+  transition:
+    transform 0.25s cubic-bezier(0.2, 0, 0, 1),
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.tool-tile:hover,
+.tool-tile:focus-visible,
+.tool-tile.active {
+  border-color: rgba(255, 255, 255, 0.35);
+  background-color: rgba(255, 255, 255, 0.08);
+  transform: translateY(-4px);
+  box-shadow:
+    0 14px 32px rgba(0, 0, 0, 0.65),
+    0 0 20px rgba(255, 255, 255, 0.04);
+}
+
+.tool-icon {
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+  will-change: transform;
+}
+
+.tool-tile:hover .tool-icon,
+.tool-tile:focus-visible .tool-icon,
+.tool-tile.active .tool-icon {
+  transform: scale(1.15);
+}
+
+.tool-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%, 6px);
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 40;
+  transition:
+    opacity 0.2s cubic-bezier(0.2, 0, 0, 1),
+    transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.tool-tile:hover .tool-tooltip,
+.tool-tile:focus-visible .tool-tooltip,
+.tool-tile.active .tool-tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 /* ==========================================================================

@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initTypewriter();
   initLanyardInteraction();
   initTickerControls();
+  initToolsSection();
 });
 
 /* ==========================================================================
@@ -845,5 +846,83 @@ function initTickerControls() {
         track.classList.toggle("is-paused");
       }
     });
+  });
+}
+
+/* ==========================================================================
+   8. SECTION 03 — TOOLS & TECHNOLOGIES FILTER & TOOLTIP INTERACTION
+   ========================================================================== */
+function initToolsSection() {
+  const filterBtns = document.querySelectorAll(".tool-filter-btn");
+  const toolTiles = document.querySelectorAll(".tool-tile");
+  if (!toolTiles.length) return;
+
+  // 1. Category Filter
+  filterBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.getAttribute("data-tool-filter");
+
+      filterBtns.forEach((b) => {
+        b.classList.remove("bg-white", "text-black", "font-semibold", "shadow-sm");
+        b.classList.add(
+          "border",
+          "border-white/10",
+          "bg-white/[0.04]",
+          "text-neutral-300",
+          "font-medium"
+        );
+        b.setAttribute("aria-pressed", "false");
+      });
+
+      btn.classList.add("bg-white", "text-black", "font-semibold", "shadow-sm");
+      btn.classList.remove(
+        "border",
+        "border-white/10",
+        "bg-white/[0.04]",
+        "text-neutral-300",
+        "font-medium"
+      );
+      btn.setAttribute("aria-pressed", "true");
+
+      toolTiles.forEach((tile) => {
+        const cat = tile.getAttribute("data-category");
+        if (filter === "all" || cat === filter) {
+          tile.classList.remove("hidden");
+          tile.style.opacity = "0";
+          tile.style.transform = "scale(0.92)";
+          requestAnimationFrame(() => {
+            tile.style.transition = "opacity 0.25s ease, transform 0.25s ease";
+            tile.style.opacity = "1";
+            tile.style.transform = "scale(1)";
+          });
+        } else {
+          tile.classList.add("hidden");
+          tile.classList.remove("active");
+        }
+      });
+    });
+  });
+
+  // 2. Click or Tap to toggle active tooltip
+  toolTiles.forEach((tile) => {
+    tile.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const wasActive = tile.classList.contains("active");
+      toolTiles.forEach((t) => t.classList.remove("active"));
+      if (!wasActive) {
+        tile.classList.add("active");
+      }
+    });
+  });
+
+  // Dismiss on click outside or Escape
+  document.addEventListener("click", () => {
+    toolTiles.forEach((t) => t.classList.remove("active"));
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      toolTiles.forEach((t) => t.classList.remove("active"));
+    }
   });
 }
