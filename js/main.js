@@ -358,6 +358,7 @@ function initNavigation() {
   const sectionNavMap = {
     home: "#home",
     about: "#about",
+    "what-i-build": "#about",
     skills: "#skills",
     projects: "#projects",
     experience: "#about",

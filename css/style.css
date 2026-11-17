@@ -69,6 +69,12 @@ input:focus-visible {
   font-variation-settings: "wdth" 75;
 }
 
+/* Condensed display font for stats numbers and feature card titles */
+.font-condensed {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.03em;
+}
+
 /* Big display headings rule: uppercase allowed, tracking 0, line-height 0.95 */
 .display-heading {
   font-family:
