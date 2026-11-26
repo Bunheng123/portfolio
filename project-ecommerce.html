@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Case Study: Full-Stack E-Commerce & FIFO Inventory Management System (React 19 + Spring Boot 3) by Lim Bunheng."
+    />
+    <title>
+      E-Commerce &amp; FIFO Inventory System — Lim Bunheng | Project Details
+    </title>
+
+    <!-- Google Fonts: Bricolage Grotesque, Inter & Bebas Neue -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Devicon & FontAwesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Tailwind Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                bg: "#060608",
+                card: "#0E0E12",
+                green: "#22C55E",
+              },
+            },
+            fontFamily: {
+              sans: [
+                "Inter",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "sans-serif",
+              ],
+              display: ['"Bricolage Grotesque"', "system-ui", "sans-serif"],
+              condensed: ['"Bebas Neue"', "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Shared Portfolio Stylesheet & Scripts -->
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/main.js" defer></script>
+  </head>
+  <body class="bg-[#060608] text-[#F8FAFC] antialiased">
+    <!-- 1. TOPOGRAPHIC BACKGROUND -->
+    <div class="topo-background" aria-hidden="true">
+      <canvas id="topo-canvas"></canvas>
+      <div class="topo-vignette"></div>
+    </div>
+
+    <!-- 2. HEADER NAVBAR -->
+    <header
+      class="fixed inset-x-0 top-0 z-50 h-16 border-b border-white/10 bg-[#060608]/80 backdrop-blur-xl"
+    >
+      <div id="scrollLine" class="scroll-line" aria-hidden="true"></div>
+      <nav
+        aria-label="Project page navigation"
+        class="relative mx-auto flex h-full w-full items-center justify-between gap-4 px-[5%]"
+      >
+        <a
+          href="index.html"
+          class="flex items-center gap-3 text-white transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+        >
+          <span
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white font-display text-sm font-extrabold text-black"
+          >
+            LB
+          </span>
+          <span class="flex flex-col leading-tight">
+            <span
+              class="font-display text-lg font-extrabold tracking-normal text-white"
+              >Lim Bunheng</span
+            >
+            <span class="text-xs font-normal text-neutral-400"
+              >Project Case Study</span
+            >
+          </span>
+        </a>
+
+        <div id="navMenu" class="relative hidden items-center gap-7 lg:flex">
+          <a class="nav-link active" href="#overview">Overview</a>
+          <a class="nav-link" href="#showcase">Preview</a>
+          <a class="nav-link" href="#architecture">Architecture</a>
+          <a class="nav-link" href="#features">Modules</a>
+          <a class="nav-link" href="index.html#projects">All Projects</a>
+          <span
+            class="nav-indicator"
+            id="navIndicator"
+            aria-hidden="true"
+          ></span>
+        </div>
+
+        <div class="hidden items-center gap-4 lg:flex">
+          <div
+            class="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 backdrop-blur-md"
+          >
+            <div
+              id="ringWrap"
+              class="relative flex h-5 w-5 items-center justify-center"
+            >
+              <svg
+                class="h-5 w-5 -rotate-90 transform"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
+                <circle
+                  cx="10"
+                  cy="10"
+                  r="8"
+                  fill="none"
+                  stroke="rgba(255, 255, 255, 0.15)"
+                  stroke-width="2"
+                />
+                <circle
+                  id="progressRingBar"
+                  cx="10"
+                  cy="10"
+                  r="8"
+                  fill="none"
+                  stroke="#FFFFFF"
+                  stroke-width="2"
+                  stroke-dasharray="50.27"
+                  stroke-dashoffset="50.27"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <svg
+                id="progressCheck"
+                class="hidden absolute h-2.5 w-2.5 text-black"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <span id="scrollLabel" class="text-xs font-medium text-neutral-400"
+              >Reading</span
+            >
+            <span
+              id="scrollPercent"
+              class="w-[4ch] font-mono text-xs font-semibold text-white"
+              >0%</span
+            >
+          </div>
+          <a
+            href="https://github.com/Bunheng123/Ecommerce_Spring_"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary"
+          >
+            <span>GitHub Repo</span>
+            <i class="fa-brands fa-github" aria-hidden="true"></i>
+          </a>
+        </div>
+
+        <!-- Mobile Toggle -->
+        <button
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+          class="mobile-toggle inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.04] p-2 text-neutral-300 transition-colors hover:border-white/30 hover:text-white focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 lg:hidden"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </nav>
+
+      <!-- Mobile Drawer -->
+      <div
+        id="mobileMenu"
+        class="hidden border-b border-white/10 bg-[#060608]/95 px-4 py-4 backdrop-blur-xl lg:hidden"
+      >
+        <div class="flex flex-col space-y-3">
+          <a
+            href="#overview"
+            class="rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white"
+            >Overview</a
+          >
+          <a
+            href="#showcase"
+            class="rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white"
+            >Preview</a
+          >
+          <a
+            href="#architecture"
+            class="rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white"
+            >Architecture</a
+          >
+          <a
+            href="#features"
+            class="rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white"
+            >Modules</a
+          >
+          <a
+            href="index.html#projects"
+            class="rounded-lg px-3 py-2 text-sm font-medium text-neutral-300 hover:bg-white/5 hover:text-white"
+            >Back to Portfolio</a
+          >
+          <div class="pt-2">
+            <a
+              href="https://github.com/Bunheng123/Ecommerce_Spring_"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary w-full text-center"
+            >
+              <span>View GitHub Repository</span>
+              <i class="fa-brands fa-github" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 3. MAIN CONTENT -->
+    <main class="relative z-10 pt-24 pb-16">
+      <!-- ===== OVERVIEW HERO ===== -->
+      <section
+        id="overview"
+        aria-labelledby="project-title"
+        class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"
+      >
+        <!-- Back to portfolio breadcrumb -->
+        <div class="mb-8">
+          <a
+            href="index.html#projects"
+            class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-medium text-neutral-300 transition-colors hover:border-white/30 hover:bg-white/10 hover:text-white"
+          >
+            <i class="fa-solid fa-arrow-left text-[11px]" aria-hidden="true"></i>
+            <span>Back to Featured Projects</span>
+          </a>
+        </div>
+
+        <div class="reveal">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span
+              class="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-200"
+            >
+              Full-Stack E-Commerce &amp; ERP
+            </span>
+            <span
+              class="rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-xs font-medium text-emerald-300"
+            >
+              React 19 + Spring Boot 3
+            </span>
+            <span class="text-xs text-neutral-400 font-mono">
+              Repo: Bunheng123/Ecommerce_Spring_
+            </span>
+          </div>
+
+          <h1
+            id="project-title"
+            class="display-heading mt-4 text-4xl sm:text-5xl lg:text-6xl text-white"
+          >
+            E-Commerce &amp; FIFO Inventory Management System
+          </h1>
+
+          <!-- CUSTOMIZE: Edit your project summary paragraph below -->
+          <p class="mt-5 max-w-3xl text-base leading-relaxed text-neutral-300 sm:text-lg">
+            A production-ready B2C retail storefront and B2B wholesale inventory
+            ERP platform built with <strong class="text-white">React 19</strong>
+            and <strong class="text-white">Spring Boot 3</strong>. It pairs an
+            interactive shopping storefront with a rigorous back-office engine
+            featuring <strong class="text-white">FIFO batch depletion</strong>,
+            historical <strong class="text-white">COGS profit analytics</strong>,
+            supplier purchase order pipelines, B2B wholesale fulfillment, and
+            asynchronous <strong class="text-white">Gmail SMTP</strong> alerts.
+          </p>
+
+          <!-- Tech chips -->
+          <div class="mt-6 flex flex-wrap gap-2">
+            <span class="tech-chip text-xs">Java 17 / 21</span>
+            <span class="tech-chip text-xs">Spring Boot 3</span>
+            <span class="tech-chip text-xs">Spring Security 6 &amp; JWT</span>
+            <span class="tech-chip text-xs">PostgreSQL 14+ &amp; JPA</span>
+            <span class="tech-chip text-xs">React 19 + Vite</span>
+            <span class="tech-chip text-xs">Tailwind CSS</span>
+            <span class="tech-chip text-xs">Cloudinary</span>
+            <span class="tech-chip text-xs">Spring Mail (@Async)</span>
+            <span class="tech-chip text-xs">JUnit 5 &amp; MockMvc</span>
+          </div>
+
+          <!-- Action Buttons -->
+          <!-- CUSTOMIZE: Add your live demo link below when deployed -->
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href="https://github.com/Bunheng123/Ecommerce_Spring_"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
+            >
+              <span>View on GitHub</span>
+              <i class="fa-brands fa-github text-base" aria-hidden="true"></i>
+            </a>
+            <!-- Example Live Demo button (uncomment and replace URL when deployed)
+            <a
+              href="https://your-live-demo-url.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-secondary"
+            >
+              <span>Live Demo</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>
+            </a>
+            -->
+            <a href="#features" class="btn-secondary">
+              <span>Explore Modules</span>
+              <i class="fa-solid fa-arrow-down text-xs" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Specs Strip -->
+        <div
+          class="reveal mt-12 grid grid-cols-2 gap-4 rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:grid-cols-4 sm:gap-6 sm:p-8"
+        >
+          <div>
+            <p class="text-xs font-mono uppercase tracking-wider text-neutral-400">
+              Frontend
+            </p>
+            <p class="mt-1 font-display text-xl font-bold text-white">
+              React 19 + Vite
+            </p>
+            <p class="mt-1 text-xs text-neutral-400">
+              Tailwind CSS, Context API, Axios
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-mono uppercase tracking-wider text-neutral-400">
+              Backend
+            </p>
+            <p class="mt-1 font-display text-xl font-bold text-white">
+              Spring Boot 3
+            </p>
+            <p class="mt-1 text-xs text-neutral-400">
+              Spring Security 6, Stateless JWT
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-mono uppercase tracking-wider text-neutral-400">
+              Inventory Core
+            </p>
+            <p class="mt-1 font-display text-xl font-bold text-white">
+              FIFO Engine
+            </p>
+            <p class="mt-1 text-xs text-neutral-400">
+              Batch depletion &amp; COGS tracking
+            </p>
+          </div>
+          <div>
+            <p class="text-xs font-mono uppercase tracking-wider text-neutral-400">
+              Database &amp; QA
+            </p>
+            <p class="mt-1 font-display text-xl font-bold text-white">
+              PostgreSQL + JUnit 5
+            </p>
+            <p class="mt-1 text-xs text-neutral-400">
+              JPA Specifications &amp; MockMvc
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CUSTOMIZABLE SHOWCASE / SCREENSHOTS SECTION ===== -->
+      <!-- CUSTOMIZE: Replace the placeholder boxes below with your real project screenshots!
+           Save images inside assets/projects/ and replace the placeholder <div> with:
+           <img src="assets/projects/storefront.png" alt="Customer Storefront" class="h-full w-full object-cover" />
+      -->
+      <section
+        id="showcase"
+        aria-labelledby="showcase-heading"
+        class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8"
+      >
+        <div class="reveal mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="text-xs font-medium text-neutral-400">
+              Visual Showcase (Customizable)
+            </p>
+            <h2
+              id="showcase-heading"
+              class="display-heading mt-1 text-3xl sm:text-4xl text-white"
+            >
+              APPLICATION PREVIEW
+            </h2>
+          </div>
+          <p class="text-xs text-neutral-400 font-mono">
+            Tip: Drop screenshots in <span class="text-neutral-200">assets/</span> &amp; swap placeholders in <span class="text-neutral-200">project-ecommerce.html</span>
+          </p>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-3">
+          <!-- Preview Card 1 -->
+          <article class="reveal card-large overflow-hidden p-4 flex flex-col">
+            <div
+              class="aspect-[16/10] w-full rounded-2xl border border-dashed border-white/15 bg-white/[0.02] flex flex-col items-center justify-center p-4 text-center"
+            >
+              <!-- CUSTOMIZE: Replace this placeholder with <img src="assets/..." alt="..." class="h-full w-full rounded-2xl object-cover" /> -->
+              <i
+                class="fa-solid fa-store text-2xl text-neutral-500 mb-2"
+                aria-hidden="true"
+              ></i>
+              <span class="text-xs font-medium text-neutral-300">
+                Customer Storefront &amp; Hero Rail
+              </span>
+              <span class="mt-1 text-[11px] text-neutral-500">
+                Add storefront screenshot here
+              </span>
+            </div>
+            <div class="mt-4 px-1">
+              <h3 class="font-display text-lg font-bold text-white">
+                B2C Storefront &amp; Cart
+              </h3>
+              <p class="mt-1 text-xs leading-relaxed text-neutral-400">
+                Interactive garment hero rail, filtered catalog, wishlist
+                drawer, slide-out cart, and animated delivery tracker.
+              </p>
+            </div>
+          </article>
+
+          <!-- Preview Card 2 -->
+          <article class="reveal card-large overflow-hidden p-4 flex flex-col">
+            <div
+              class="aspect-[16/10] w-full rounded-2xl border border-dashed border-white/15 bg-white/[0.02] flex flex-col items-center justify-center p-4 text-center"
+            >
+              <!-- CUSTOMIZE: Replace this placeholder with your Admin Dashboard screenshot -->
+              <i
+                class="fa-solid fa-chart-line text-2xl text-neutral-500 mb-2"
+                aria-hidden="true"
+              ></i>
+              <span class="text-xs font-medium text-neutral-300">
+                Admin ERP &amp; Dual-Axis Analytics
+              </span>
+              <span class="mt-1 text-[11px] text-neutral-500">
+                Add admin dashboard screenshot here
+              </span>
+            </div>
+            <div class="mt-4 px-1">
+              <h3 class="font-display text-lg font-bold text-white">
+                Executive ERP Dashboard
+              </h3>
+              <p class="mt-1 text-xs leading-relaxed text-neutral-400">
+                6 live KPI cards, SVG revenue/COGS spline charts (7D/30D/Monthly),
+                and low-stock restock telemetry.
+              </p>
+            </div>
+          </article>
+
+          <!-- Preview Card 3 -->
+          <article class="reveal card-large overflow-hidden p-4 flex flex-col">
+            <div
+              class="aspect-[16/10] w-full rounded-2xl border border-dashed border-white/15 bg-white/[0.02] flex flex-col items-center justify-center p-4 text-center"
+            >
+              <!-- CUSTOMIZE: Replace this placeholder with your FIFO / Wholesale / Reports screenshot -->
+              <i
+                class="fa-solid fa-boxes-stacked text-2xl text-neutral-500 mb-2"
+                aria-hidden="true"
+              ></i>
+              <span class="text-xs font-medium text-neutral-300">
+                FIFO Stock Batches &amp; PO Pipeline
+              </span>
+              <span class="mt-1 text-[11px] text-neutral-500">
+                Add inventory / reports screenshot here
+              </span>
+            </div>
+            <div class="mt-4 px-1">
+              <h3 class="font-display text-lg font-bold text-white">
+                FIFO Batches &amp; Reports
+              </h3>
+              <p class="mt-1 text-xs leading-relaxed text-neutral-400">
+                Supplier purchase orders, B2B wholesale fulfillment, batch audit
+                logs, and Excel-ready UTF-8 CSV exports.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== ARCHITECTURE SECTION ===== -->
+      <section
+        id="architecture"
+        aria-labelledby="architecture-heading"
+        class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8"
+      >
+        <div class="reveal mb-8">
+          <p class="text-xs font-medium text-neutral-400">
+            System Design &amp; Stack
+          </p>
+          <h2
+            id="architecture-heading"
+            class="display-heading mt-1 text-3xl sm:text-4xl text-white"
+          >
+            FULL-STACK ARCHITECTURE
+          </h2>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+          <!-- Frontend Card -->
+          <article
+            class="reveal card-large p-6 sm:p-8"
+            style="border-top: 3px solid #38bdf8"
+          >
+            <div class="flex items-center justify-between gap-2">
+              <h3 class="font-display text-2xl font-bold text-white">
+                Frontend — <code class="text-sky-300 text-lg">Stock_Inventory/</code>
+              </h3>
+              <span class="text-xs font-mono text-neutral-400">React 19 + Vite</span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-neutral-300">
+              Single-page React application serving both the public B2C shopping
+              storefront and the role-protected Admin ERP portal.
+            </p>
+            <ul class="mt-5 space-y-2.5 text-sm text-neutral-300">
+              <li class="flex items-start gap-2.5">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400"></span>
+                <span>
+                  <strong class="text-white">UI &amp; Visualization:</strong>
+                  Tailwind CSS monochrome editorial design system with custom SVG
+                  dual-axis spline charts (<code class="text-neutral-200">SmoothSalesTrendChart</code>)
+                  and SweetAlert2 dialogs.
+                </span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400"></span>
+                <span>
+                  <strong class="text-white">State &amp; Routing:</strong>
+                  React Context API (<code class="text-neutral-200">AuthContext</code>,
+                  <code class="text-neutral-200">CartContext</code>,
+                  <code class="text-neutral-200">WishlistContext</code>) with
+                  protected Admin &amp; Customer route guards.
+                </span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400"></span>
+                <span>
+                  <strong class="text-white">API Layer:</strong>
+                  Modular Axios clients with automatic JWT bearer token
+                  interceptors across products, orders, purchase orders,
+                  wholesale, and reports.
+                </span>
+              </li>
+            </ul>
+          </article>
+
+          <!-- Backend Card -->
+          <article
+            class="reveal card-large p-6 sm:p-8"
+            style="border-top: 3px solid #4ade80"
+          >
+            <div class="flex items-center justify-between gap-2">
+              <h3 class="font-display text-2xl font-bold text-white">
+                Backend — <code class="text-emerald-300 text-lg">Stock_Inventory_Spring/</code>
+              </h3>
+              <span class="text-xs font-mono text-neutral-400">Spring Boot 3</span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-neutral-300">
+              Layered REST API backend engineered in Java 17/21 with clean
+              separation across controllers, services, DTOs, mappers, entities,
+              and JPA specifications.
+            </p>
+            <ul class="mt-5 space-y-2.5 text-sm text-neutral-300">
+              <li class="flex items-start gap-2.5">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400"></span>
+                <span>
+                  <strong class="text-white">Security &amp; Auth:</strong>
+                  Spring Security 6 with stateless JWT filter, BCrypt password
+                  hashing, and granular RBAC (<code class="text-neutral-200">ROLE_ADMIN</code>,
+                  <code class="text-neutral-200">ROLE_STOCK</code>,
+                  <code class="text-neutral-200">ROLE_USER</code>).
+                </span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400"></span>
+                <span>
+                  <strong class="text-white">Persistence &amp; Filtering:</strong>
+                  PostgreSQL 14+ with Spring Data JPA / Hibernate, dynamic JPA
+                  Specifications for multi-criteria product &amp; order search,
+                  and automated <code class="text-neutral-200">DataSeeder</code>.
+                </span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400"></span>
+                <span>
+                  <strong class="text-white">Integrations &amp; QA:</strong>
+                  Cloudinary image hosting, <code class="text-neutral-200">@Async</code>
+                  Gmail SMTP HTML email alerts, and JUnit 5 + Mockito + MockMvc
+                  integration tests.
+                </span>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== CORE MODULES & FEATURES ===== -->
+      <section
+        id="features"
+        aria-labelledby="features-heading"
+        class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8"
+      >
+        <div class="reveal mb-8">
+          <p class="text-xs font-medium text-neutral-400">
+            Engineering Deep-Dive
+          </p>
+          <h2
+            id="features-heading"
+            class="display-heading mt-1 text-3xl sm:text-4xl text-white"
+          >
+            CORE MODULES &amp; HIGHLIGHTS
+          </h2>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <!-- Module 1 -->
+          <article class="reveal card-large p-6 sm:p-8">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-condensed text-2xl tracking-wider text-orange-400">
+                01
+              </span>
+              <span class="tech-chip text-xs">Inventory Accounting</span>
+            </div>
+            <h3 class="font-display text-xl font-bold text-white">
+              FIFO Batch Depletion &amp; COGS Engine
+            </h3>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-300 list-disc list-inside">
+              <li>
+                Audited <code class="text-white">stock_batches</code> table storing
+                purchase date, unit cost, received quantity, and remaining quantity.
+              </li>
+              <li>
+                Automatic oldest-first batch consumption during both B2C retail
+                and B2B wholesale checkouts.
+              </li>
+              <li>
+                Preserves <code class="text-white">EXHAUSTED</code> batch records
+                permanently for exact historical COGS and gross margin accuracy.
+              </li>
+              <li>
+                Below-cost price protection validates retail sales and wholesale
+                contracts against batch unit cost.
+              </li>
+            </ul>
+          </article>
+
+          <!-- Module 2 -->
+          <article class="reveal card-large p-6 sm:p-8">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-condensed text-2xl tracking-wider text-sky-400">
+                02
+              </span>
+              <span class="tech-chip text-xs">B2C Retail Experience</span>
+            </div>
+            <h3 class="font-display text-xl font-bold text-white">
+              Customer Storefront &amp; Checkout Flow
+            </h3>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-300 list-disc list-inside">
+              <li>
+                Interactive garment hero rail with transparent product cutouts
+                and debounced server-side paginated catalog filtering.
+              </li>
+              <li>
+                Live stock telemetry badges (<code class="text-white">In Stock</code>,
+                <code class="text-white">ONLY X LEFT</code>,
+                <code class="text-white">COMING SOON</code>).
+              </li>
+              <li>
+                10% VAT tax &amp; shipping calculator ($0 on orders &ge; $100, $5
+                flat rate below), plus printable A4 tax receipts.
+              </li>
+              <li>
+                Animated scooter order tracker (<code class="text-white">PENDING → PROCESSING → SHIPPED → DELIVERED</code>)
+                and 2-hour self-cancellation with automatic stock restoration.
+              </li>
+            </ul>
+          </article>
+
+          <!-- Module 3 -->
+          <article class="reveal card-large p-6 sm:p-8">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-condensed text-2xl tracking-wider text-purple-400">
+                03
+              </span>
+              <span class="tech-chip text-xs">Operations &amp; B2B</span>
+            </div>
+            <h3 class="font-display text-xl font-bold text-white">
+              Admin ERP &amp; B2B Wholesale Portal
+            </h3>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-300 list-disc list-inside">
+              <li>
+                6 live KPI cards + dual-axis interactive SVG charts comparing
+                settled revenue, COGS depletion, and order volume.
+              </li>
+              <li>
+                Supplier &amp; Purchase Order pipeline (<code class="text-white">DRAFT → ORDERED → RECEIVED</code>)
+                that automatically spawns new FIFO stock batches on receipt.
+              </li>
+              <li>
+                Dedicated B2B wholesale buyer management with custom pricing,
+                credit limits, and contract fulfillment.
+              </li>
+              <li>
+                Financial reports (<code class="text-white">/admin/reports</code>)
+                with Gross/Net revenue, COGS, top sellers, and UTF-8 BOM Excel CSV export.
+              </li>
+            </ul>
+          </article>
+
+          <!-- Module 4 -->
+          <article class="reveal card-large p-6 sm:p-8">
+            <div class="flex items-center justify-between mb-3">
+              <span class="font-condensed text-2xl tracking-wider text-emerald-400">
+                04
+              </span>
+              <span class="tech-chip text-xs">Security &amp; Verification</span>
+            </div>
+            <h3 class="font-display text-xl font-bold text-white">
+              RBAC, Async Email &amp; Automated Testing
+            </h3>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-300 list-disc list-inside">
+              <li>
+                Terminal order locking prevents edits to completed or cancelled
+                orders after fulfillment milestones.
+              </li>
+              <li>
+                <code class="text-white">@Async</code> Gmail SMTP service sends
+                HTML receipts, cancellation notices, and admin refund alerts
+                without blocking HTTP responses.
+              </li>
+              <li>
+                Role administration supports <code class="text-white">ROLE_ADMIN</code>,
+                <code class="text-white">ROLE_STOCK</code>, and <code class="text-white">ROLE_USER</code>
+                plus instant account deactivation.
+              </li>
+              <li>
+                Automated JUnit 5, Mockito, and MockMvc integration tests covering
+                Cart, FIFO batch logic, Reports, and Wholesale workflows.
+              </li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===== PROJECT STRUCTURE & LINKS ===== -->
+      <section
+        id="structure"
+        aria-labelledby="structure-heading"
+        class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8"
+      >
+        <div class="reveal card-large p-6 sm:p-10">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p class="text-xs font-medium text-neutral-400">
+                Codebase Layout
+              </p>
+              <h2
+                id="structure-heading"
+                class="display-heading mt-1 text-2xl sm:text-3xl text-white"
+              >
+                REPOSITORY STRUCTURE
+              </h2>
+              <p class="mt-2 max-w-2xl text-sm text-neutral-300">
+                Organized as a clean monorepo separating the React 19 client
+                from the Spring Boot 3 REST backend.
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <a
+                href="https://github.com/Bunheng123/Ecommerce_Spring_"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-primary"
+              >
+                <span>Open Repository</span>
+                <i class="fa-brands fa-github" aria-hidden="true"></i>
+              </a>
+              <a href="index.html#projects" class="btn-secondary">
+                <span>All Projects</span>
+              </a>
+            </div>
+          </div>
+
+          <pre
+            class="mt-6 overflow-x-auto rounded-2xl border border-white/10 bg-[#09090D] p-5 text-xs leading-relaxed text-neutral-300 font-mono"
+          >Ecommerce_Spring_/
+├── README.md
+├── Stock_Inventory/                 # React 19 + Vite (Storefront + Admin ERP)
+│   └── src/
+│       ├── admin/                   # Dashboard, Orders, Products, Suppliers, POs, Wholesale, Reports
+│       ├── api/                     # Axios REST clients with JWT bearer interceptors
+│       ├── components/              # CartDrawer, OrderReceipt, Navbar, Footer
+│       ├── context/                 # AuthContext, CartContext, WishlistContext
+│       └── pages/customer/          # Home, Catalog, ProductDetail, Checkout, OrderHistory
+└── Stock_Inventory_Spring/          # Spring Boot 3 + PostgreSQL Backend
+    └── src/
+        ├── main/java/com/setec/stock_inventory/
+        │   ├── config/              # SecurityConfig, CloudinaryConfig, CorsConfig, DataSeeder
+        │   ├── controller/          # REST Controllers (Auth, Product, Order, PO, Wholesale, Reports)
+        │   ├── dto/                 # Request, Response, Report &amp; Email Payload DTOs
+        │   ├── entity/ &amp; enums/     # JPA Entities (StockBatch, Order, Product...) &amp; State Enums
+        │   ├── security/            # JwtAuthenticationFilter &amp; CustomUserDetailsService
+        │   ├── service/             # FIFO Batch Depletion Engine, Report &amp; @Async Email Services
+        │   └── specification/       # Dynamic JPA Product &amp; Order Filtering Specifications
+        └── test/java/com/setec/stock_inventory/
+                                     # JUnit 5 + MockMvc Integration Suite (Cart, FIFO, Reports, Wholesale)</pre>
+        </div>
+      </section>
+    </main>
+
+    <!-- 4. FOOTER -->
+    <footer
+      class="relative z-10 border-t border-white/10 py-8 text-center text-xs text-neutral-400"
+    >
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <p
+          class="font-display font-medium uppercase tracking-wider text-neutral-400"
+        >
+          Lim Bunheng &bull; E-Commerce &amp; FIFO Inventory Management System
+        </p>
+        <div class="mt-3 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="index.html#projects"
+            class="text-neutral-300 hover:text-white underline underline-offset-4"
+            >Back to Portfolio</a
+          >
+          <span aria-hidden="true">&bull;</span>
+          <a
+            href="https://github.com/Bunheng123/Ecommerce_Spring_"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-neutral-300 hover:text-white underline underline-offset-4"
+            >GitHub Repository</a
+          >
+          <span aria-hidden="true">&bull;</span>
+          <a
+            href="https://t.me/itsmeeheng"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-neutral-300 hover:text-white underline underline-offset-4"
+            >Telegram @itsmeeheng</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

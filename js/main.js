@@ -452,7 +452,7 @@ function initNavigation() {
     }
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        indicator.classList.add("is-ready");
+        if (indicator) indicator.classList.add("is-ready");
         isInitialLoad = false;
       });
     });
